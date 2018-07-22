@@ -1,5 +1,5 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿
+using System;
 using UnityEngine;
 
 public class t1 : MonoBehaviour {
@@ -7,8 +7,8 @@ public class t1 : MonoBehaviour {
     public BuildInfoUI buildInfoUI;
     public int type;
     void Start () {
-		
-	}
+        new System.Random().Next();
+    }
 	
 	void Update () {
 
@@ -16,7 +16,6 @@ public class t1 : MonoBehaviour {
     private void OnMouseDown()
     {
         GameCtrl.currentSelectedTile.setTileType(type);
-        GameCtrl.hideBuildInfoUI();
     }
 
 

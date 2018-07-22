@@ -6,8 +6,12 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "BuildableLibrary.asset", menuName = "cry/buildableList", order = 1)]
 public class BuildableLibrary : ScriptableObject, IList<Buildable>, IDictionary<string, Buildable>
 {
+
+    public BuildableLibrary aa;
+    public Buildable bbb;
     public List<Buildable> buildableList;
     Dictionary<int, Buildable> buildableDictionary;
+
 
 
     public void OnAfterDeserialize()

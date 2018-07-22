@@ -19,4 +19,13 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
     {
     }
 
+
+    public void show()
+    {
+        GetComponent<Canvas>().enabled = true;
+    }
+    void hide()
+    {
+        GetComponent<Canvas>().enabled = false;
+    }
 }

@@ -21,20 +21,18 @@ public class Player : MonoBehaviour {
 
         float h = Input.GetAxis("Horizontal");
         float v = Input.GetAxis("Vertical");
-        Debug.Log("update----------");
-        Debug.Log(Time.deltaTime);
-
-        
+        //Debug.Log("update----------");
 
 
         //transform.Translate(new Vector3(h * Time.deltaTime * speed, 0f, v * Time.deltaTime * speed));
         //transform.Translate(Vector3.forward * 2 * Time.deltaTime);
-        Debug.Log(transform.position);
-        Debug.Log("update+++++++++++");
+        //Debug.Log("update+++++++++++");
     }
     public void move()
     {
-        transform.position = Vector3.MoveTowards(transform.position, target, speed * Time.deltaTime);
+        iTween.MoveBy(gameObject, new Vector3(2,0,3), 0.2f);
+
+
     }
     void showMoveableOrAttachableTile()
     {

@@ -45,7 +45,6 @@ public class t1 : MonoBehaviour {
 
         void OnGUI(){
         //Debug.Log("------");
-        PlayerPrefs p;
         GUI.Label(new Rect(30, 10, 100, 200), "zzzzzz");
         GUI.Label(new Rect(30, Screen.height - 50, 100, 200), "zzzzzz");
         GUI.Label(new Rect(Screen.width - 50, Screen.height - 50, 100, 200), "zzzzzz");

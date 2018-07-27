@@ -34,8 +34,8 @@ public class Tile : MonoBehaviour {
     }
     public void setTileType(int buildableID)
     {
-        //Buildable buildable = GameConfigure.instance.buildableLibrary[buildableID];
-        //Material m = buildable.tileMaterial;
-        //this.GetComponent<MeshRenderer>().sharedMaterial = m;
+        Buildable buildable = GameConfigure.instance.buildableLibrary[buildableID];
+        Material m = buildable.tileMaterial;
+        this.GetComponent<MeshRenderer>().sharedMaterial = m;
     }
 }

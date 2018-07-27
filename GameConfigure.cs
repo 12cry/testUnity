@@ -17,12 +17,6 @@ public class GameConfigure : Singleton<GameConfigure>
     void init()
     {
 
-        foreach (Buildable builder in buildableLibrary.buildableList)
-        {
-            BuildableButtonUI newBT = Instantiate(buildableButtonUI);
-            newBT.text.text = builder.buildName;
-
-        }
     }
 
 }

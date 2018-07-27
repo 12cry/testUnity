@@ -7,8 +7,6 @@ using UnityEngine;
 public class BuildableLibrary : ScriptableObject, IList<Buildable>, IDictionary<string, Buildable>
 {
 
-    public BuildableLibrary aa;
-    public Buildable bbb;
     public List<Buildable> buildableList;
     Dictionary<int, Buildable> buildableDictionary;
 
@@ -99,7 +97,7 @@ public class BuildableLibrary : ScriptableObject, IList<Buildable>, IDictionary<
 
     public IEnumerator<Buildable> GetEnumerator()
     {
-        throw new System.NotImplementedException();
+        return buildableList.GetEnumerator();
     }
 
     public int IndexOf(Buildable item)

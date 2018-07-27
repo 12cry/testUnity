@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4590768178137458}
   - component: {fileID: 114982679521792870}
   m_Layer: 0
-  m_Name: Buildable
+  m_Name: Buildable2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,6 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cbd884188c558594fb097c9313a4981f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 0
-  buildName: a
-  tileMaterial: {fileID: 2100000, guid: 86d1ba294ac253149bb12b81537608e9, type: 2}
+  id: 2
+  buildName: b2
+  tileMaterial: {fileID: 2100000, guid: 8eeeab445c80e8544ae3b7306e32e7d3, type: 2}

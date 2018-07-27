@@ -3,7 +3,9 @@ guid: fd1f4480012d5e44ca5a2a1e200e1ed0
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - buildableLibrary: {fileID: 11400000, guid: d614b72d43f89064eab220e2ce43d32a, type: 2}
+  - buildableButtonUI: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

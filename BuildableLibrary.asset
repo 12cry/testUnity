@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e60c73d4f2ff5ab4a93e514d50b88f4b, type: 3}
   m_Name: BuildableLibrary
   m_EditorClassIdentifier: 
-  aa: {fileID: 0}
-  bbb: {fileID: 0}
-  buildableList: []
+  buildableList:
+  - {fileID: 114982679521792870, guid: 106315ed83e49f1438064e993d0b7954, type: 2}
+  - {fileID: 114982679521792870, guid: 16fa53089d2b94c499b29d9dcd71d1f6, type: 2}
+  - {fileID: 114982679521792870, guid: 14b49144fcef8fb488d95c69c8909b0d, type: 2}

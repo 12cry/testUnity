@@ -11,6 +11,9 @@ public class Land : MonoBehaviour
 
     protected virtual void Awake()
     {
+    }
+    void Start()
+    {
         init();
     }
 
@@ -22,19 +25,17 @@ public class Land : MonoBehaviour
         {
             for (int j = 0; j < y; j++)
             {
-                Vector3 v = getV(i,j);
+                Vector3 v = getV(i, j);
                 Tile newTile = Instantiate(tile);
                 newTile.transform.parent = transform;
                 newTile.transform.localPosition = v;
                 //newTile.transform.localRotation = Quaternion.identity;
-
-                //Random.Range(1, 3);
-                newTile.setTileType(0);
+                // newTile.setTileType(Random.Range(0, 2));
             }
         }
     }
 
-    Vector3 getV(int i,int j)
+    Vector3 getV(int i, int j)
     {
         Vector3 v = new Vector3(i, 0, j);
         return v;

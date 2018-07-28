@@ -63,8 +63,12 @@ public class Land : MonoBehaviour
 
     public static void Main(string[] args)
     {
+        Land land = new Land();        
         Debug.Log("main");
         Debug.Log(Random.Range(1, 5));
     }
 
+    public void test(){
+        
+    }
 }

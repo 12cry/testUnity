@@ -21,17 +21,23 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
 
     void init()
     {
-
-        int i=2;
+        int i=1;
         foreach (Buildable builder in GameConfigure.instance.buildableLibrary)
         {
-            BuildableButtonUI newBT = Instantiate(GameConfigure.instance.buildableButtonUI,CanvasCtrl.instance._transform);
+            BuildableButtonUI newBT = Instantiate(GameConfigure.instance.buildableButtonUI,transform);
             newBT.text.text = builder.buildName;
-            newBT.transform.localPosition=newBT.transform.localPosition+new Vector3(0,i*30+20,0);
+            newBT.transform.localPosition=newBT.transform.localPosition+new Vector3(i*100,0,0);
+
+// newBT.button.onClick.AddListener();
+
             i++;
         }
+        
     }
 
+    public void build(Button b){
+
+    }
 
     public void show()
     {

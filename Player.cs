@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Player : MonoBehaviour {
 
-    float speed = 2;
+    // float speed = 2;
     Vector3 target;
     private void OnMouseDown()
     {
@@ -19,8 +19,8 @@ public class Player : MonoBehaviour {
     private void Update()
     {
 
-        float h = Input.GetAxis("Horizontal");
-        float v = Input.GetAxis("Vertical");
+        // float h = Input.GetAxis("Horizontal");
+        // float v = Input.GetAxis("Vertical");
         //Debug.Log("update----------");
 
 

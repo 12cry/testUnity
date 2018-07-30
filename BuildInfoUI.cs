@@ -4,46 +4,47 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class BuildInfoUI : Singleton<BuildInfoUI> {
-
-    
+public class BuildInfoUI : Singleton<BuildInfoUI>
+{
     protected override void Awake()
     {
         base.Awake();
-
-
     }
     void Start()
     {
-        
+
         init();
     }
 
     void init()
     {
-        int i=1;
-        foreach (Buildable builder in GameConfigure.instance.buildableLibrary)
+        int i = 1;
+        foreach (Buildable buildable in GameConfigure.instance.buildableLibrary)
         {
-            BuildableButtonUI newBT = Instantiate(GameConfigure.instance.buildableButtonUI,transform);
-            newBT.text.text = builder.buildName;
-            newBT.transform.localPosition=newBT.transform.localPosition+new Vector3(i*100,0,0);
-
-// newBT.button.onClick.AddListener();
-
+            BuildableButtonUI newBT = Instantiate(GameConfigure.instance.buildableButtonUI, transform);
+            newBT.buildable = buildable;
+            newBT.text.text = buildable.buildName;
+            newBT.transform.localPosition = newBT.transform.localPosition + new Vector3(i * 100, 0, 0);
+            newBT.buttonClick += this.build;
             i++;
         }
-        
+
     }
 
-    public void build(Button b){
-
+    public void build(Buildable buildable)
+    {
+        Debug.Log("build------");
+        if(GameCtrl.currentSelectedTile==null){
+            return ;
+        }
+        GameCtrl.currentSelectedTile.setTileType(buildable);
     }
 
     public void show()
     {
         GetComponent<Canvas>().enabled = true;
     }
-    void hide()
+    void hide(Buildable buildable)
     {
         GetComponent<Canvas>().enabled = false;
     }

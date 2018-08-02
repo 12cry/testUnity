@@ -3,31 +3,15 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public class Tile : MonoBehaviour, IPointerClickHandler, IDragHandler
+public class Tile : MonoBehaviour
 {
-
     private void Awake()
     {
 
     }
-    public void test()
-    {
-        Debug.Log("test--");
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        Debug.Log("OnDrag-----------");
-    }
-    public void OnPointerClick(PointerEventData eventData)
-    {
-        Debug.Log("OnPointerClick-----------");
-        PhysicsRaycaster t;
-    }
     private void OnMouseDown()
     {
         Debug.Log("tile-OnMouseDown-----------");
-        // SendMouseEvents.Equals();
         Player player = GameCtrl.currentSelectedPlayer;
         if (player != null)
         {
@@ -42,7 +26,7 @@ public class Tile : MonoBehaviour, IPointerClickHandler, IDragHandler
 
             }
         }
-        //GameCtrl.showBuildInfoUI();
+
         BuildInfoUI.instance.show();
         GameCtrl.currentSelectedTile = this;
     }

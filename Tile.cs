@@ -5,6 +5,10 @@ using UnityEngine.EventSystems;
 
 public class Tile : MonoBehaviour
 {
+    public int x { get; set; }
+    public int z { get; set; }
+    bool canMove { get; set; }
+
     private void Awake()
     {
 
@@ -12,27 +16,30 @@ public class Tile : MonoBehaviour
     private void OnMouseDown()
     {
         Debug.Log("tile-OnMouseDown-----------");
+        GameCtrl.currentSelectedTile = this;
         Player player = GameCtrl.currentSelectedPlayer;
-        if (player != null)
+        if (canMove)
         {
-            if (canMove())
-            {
-
-
-                player.move();
-            }
-            else
-            {
-
-            }
+            player.move();
+            BuildInfoUI.instance.hide();
+        }
+        else
+        {
+            BuildInfoUI.instance.show();
         }
 
-        BuildInfoUI.instance.show();
-        GameCtrl.currentSelectedTile = this;
+        GameCtrl.cleanTiles();
+        GameCtrl.currentSelectedPlayer = null;
     }
-    bool canMove()
+
+    public void enableMove()
     {
-        return true;
+        //...
+        canMove = true;
+    }
+    public void disableMove()
+    {
+        canMove = false;
     }
     public void setTileType(int buildableID)
     {

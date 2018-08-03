@@ -9,12 +9,14 @@ public class BuildableButtonUI : MonoBehaviour
     public Text text;
     public Buildable buildable;
 
-    public event Action<Buildable> buttonClick;
+    // public event Action<Buildable> buttonClick;
 
     public void onClick()
     {
         Debug.Log("test--");
-        buttonClick(buildable);
+        // buttonClick(buildable);
+        buildable.build();
+
     }
 
 }

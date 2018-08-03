@@ -2,41 +2,49 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : MonoBehaviour
+{
+    public int x { get; set; }
+    public int z { get; set; }
 
-    // float speed = 2;
-    Vector3 target;
     private void OnMouseDown()
     {
+        if (GameCtrl.currentSelectedPlayer == this)
+        {
+            return;
+        }
         GameCtrl.currentSelectedPlayer = this;
-        showMoveableOrAttachableTile();
+        showMoveable();
     }
-    void Start()
+    void showMoveable()
     {
-        target = new Vector3(2, transform.position.y, 2);
-    }
+        GameCtrl.moveableTileList.Clear();
+        Tile[,] tiles = Land.instance.tiles;
+        for (int i = -1; i <= 1; i++)
+        {
+            for (int j = -1; j <= 1; j++)
+            {
 
-    private void Update()
-    {
+                int maxX = Land.instance.x;
+                int maxZ = Land.instance.z;
 
-        // float h = Input.GetAxis("Horizontal");
-        // float v = Input.GetAxis("Vertical");
-        //Debug.Log("update----------");
+                if (x + i < 0 || x + i > maxX || z + j < 0 || z + j > maxZ)
+                {
+                    continue;
+                }
 
+                Tile tile = tiles[x + i, z + j];
+                GameCtrl.moveableTileList.Add(tile);
+                tile.enableMove();
 
-        //transform.Translate(new Vector3(h * Time.deltaTime * speed, 0f, v * Time.deltaTime * speed));
-        //transform.Translate(Vector3.forward * 2 * Time.deltaTime);
-        //Debug.Log("update+++++++++++");
+            }
+        }
     }
     public void move()
     {
-        iTween.MoveBy(gameObject, new Vector3(2,0,3), 0.2f);
-
-
+        Tile tile = GameCtrl.currentSelectedTile;
+        iTween.MoveTo(gameObject, new Vector3(tile.x, 0, tile.z), 0.2f);
     }
-    void showMoveableOrAttachableTile()
-    {
 
-    }
 
 }

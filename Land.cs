@@ -1,16 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using Cry.Common;
 using UnityEngine;
 
-public class Land : MonoBehaviour
+public class Land : Singleton<Land>
 {
     public int x;
-    public int y;
+    public int z;
     public int size = 1;
     public Tile tile;
+    public Tile[,] tiles;
 
     protected virtual void Awake()
     {
+        base.Awake();
     }
     void Start()
     {
@@ -19,16 +22,21 @@ public class Land : MonoBehaviour
 
     void init()
     {
+        tiles = new Tile[x, z];
         for (int i = 0; i < x; i++)
         {
-            for (int j = 0; j < y; j++)
+            for (int j = 0; j < z; j++)
             {
                 Vector3 v = getV(i, j);
                 Tile newTile = Instantiate(tile);
+                newTile.x = i;
+                newTile.z = j;
                 newTile.transform.parent = transform;
                 newTile.transform.localPosition = v;
-                //newTile.transform.localRotation = Quaternion.identity;
+
                 // newTile.setTileType(Random.Range(0, 2));
+                // GameCtrl.tiles[i][j] = newTile;
+                tiles[i, j] = newTile;
             }
         }
     }
@@ -46,7 +54,7 @@ public class Land : MonoBehaviour
         Matrix4x4 originalMatrix = Gizmos.matrix;
         Gizmos.matrix = transform.localToWorldMatrix;
 
-        for (int j = 0; j < y; j++)
+        for (int j = 0; j < z; j++)
         {
             for (int i = 0; i < x; i++)
             {
@@ -61,12 +69,13 @@ public class Land : MonoBehaviour
 
     public static void Main(string[] args)
     {
-        Land land = new Land();        
+        Land land = new Land();
         Debug.Log("main");
         Debug.Log(Random.Range(1, 5));
     }
 
-    public void test(){
-        
+    public void test()
+    {
+
     }
 }

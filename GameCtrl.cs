@@ -2,17 +2,18 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameCtrl {
+public class GameCtrl
+{
     public static Tile currentSelectedTile { get; set; }
     public static Player currentSelectedPlayer { get; set; }
+    public static List<Tile> moveableTileList = new List<Tile>();
 
-
-    //public static void showBuildInfoUI()
-    //{
-    //    BuildInfoUI.instance.GetComponent<Canvas>().enabled = true;
-    //}
-    //public static void hideBuildInfoUI()
-    //{
-    //    BuildInfoUI.instance.GetComponent<Canvas>().enabled = false;
-    //}
+    public static void cleanTiles()
+    {
+        foreach (Tile tile in moveableTileList)
+        {
+            tile.disableMove();
+        }
+        moveableTileList.Clear();
+    }
 }

@@ -33,6 +33,7 @@ public class Player : MonoBehaviour
                     continue;
                 }
 
+
                 Tile tile = tiles[x + i, z + j];
                 GameCtrl.moveableTileList.Add(tile);
                 tile.enableMove();

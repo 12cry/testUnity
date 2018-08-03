@@ -28,6 +28,7 @@ public class Tile : MonoBehaviour
             BuildInfoUI.instance.show();
         }
 
+
         GameCtrl.cleanTiles();
         GameCtrl.currentSelectedPlayer = null;
     }

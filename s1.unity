@@ -756,8 +756,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3046bc2677c0a354a9b6daf4af87c58a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  x: 5
-  z: 5
+  x: 2
+  z: 2
   size: 1
   tile: {fileID: 114106216813915508, guid: f56b2c9e082ba7f468ef51c1d48b902c, type: 2}
 --- !u!1 &2012127240

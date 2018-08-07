@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.EventSystems;
+﻿using UnityEngine;
 
 public class Tile : MonoBehaviour
 {
@@ -44,13 +41,14 @@ public class Tile : MonoBehaviour
     }
     public void setTileType(int buildableID)
     {
-        Buildable buildable = GameConfigure.instance.buildableLibrary[buildableID];
+        DieBuildable buildable = (DieBuildable)GameConfigure.instance.buildableLibrary[buildableID];
         this.setTileType(buildable);
     }
-    public void setTileType(Buildable buildable)
+    public void setTileType(DieBuildable buildable)
     {
         Material m = buildable.tileMaterial;
         this.GetComponent<MeshRenderer>().sharedMaterial = m;
+        
     }
 
 }

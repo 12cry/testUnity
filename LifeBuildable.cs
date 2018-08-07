@@ -5,7 +5,14 @@ public class LifeBuildable : Buildable
 {
 
     public Player player;
-    public void build(){
-        Debug.Log("build22------");
+
+    public override void build()
+    {
+        Tile tile = GameCtrl.currentSelectedTile;
+        Player player = Instantiate(this.player);
+        Transform t = player.GetComponent<Transform>();
+        t.localPosition = new Vector3(tile.x,0,tile.z);
+        player.x=tile.x;
+        player.z=tile.z;
     }
 }

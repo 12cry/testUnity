@@ -1,15 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class Buildable : MonoBehaviour
+public abstract class Buildable : MonoBehaviour
 {
     public int id;
     public string buildName;
-    public Material tileMaterial;
 
+    public abstract void build();
 
-    public void build()
-    {
-        Debug.Log("build------");
-    }
 }

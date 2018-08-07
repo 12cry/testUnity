@@ -11,7 +11,7 @@ public class Land : Singleton<Land>
     public Tile tile;
     public Tile[,] tiles;
 
-    protected virtual void Awake()
+    protected void Awake()
     {
         base.Awake();
     }

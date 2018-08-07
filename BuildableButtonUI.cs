@@ -13,7 +13,6 @@ public class BuildableButtonUI : MonoBehaviour
 
     public void onClick()
     {
-        Debug.Log("test--");
         // buttonClick(buildable);
         buildable.build();
 

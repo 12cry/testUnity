@@ -45,6 +45,8 @@ public class Player : MonoBehaviour
     {
         Tile tile = GameCtrl.currentSelectedTile;
         iTween.MoveTo(gameObject, new Vector3(tile.x, 0, tile.z), 0.2f);
+        this.x = tile.x;
+        this.z = tile.z;
     }
 
 

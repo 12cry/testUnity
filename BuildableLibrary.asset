@@ -8,10 +8,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e60c73d4f2ff5ab4a93e514d50b88f4b, type: 3}
+  m_Script: {fileID: 11500000, guid: 60820728239d4384da7b77cd0d5dc640, type: 3}
   m_Name: BuildableLibrary
   m_EditorClassIdentifier: 
   buildableList:
-  - {fileID: 114982679521792870, guid: 106315ed83e49f1438064e993d0b7954, type: 2}
-  - {fileID: 114982679521792870, guid: 16fa53089d2b94c499b29d9dcd71d1f6, type: 2}
-  - {fileID: 114982679521792870, guid: 14b49144fcef8fb488d95c69c8909b0d, type: 2}
+  - {fileID: 114340136214998910, guid: 3d5c70f5ae58dd642b3c3551dc3a56be, type: 2}
+  - {fileID: 114281577123785692, guid: 89dc636fff9e8694da698940d044d771, type: 2}
+  - {fileID: 114901163541211820, guid: 2eab3fdb25249ec438672ca2328fb0b9, type: 2}

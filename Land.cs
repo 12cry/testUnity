@@ -11,7 +11,7 @@ public class Land : Singleton<Land>
     public Tile tile;
     public Tile[,] tiles;
 
-    protected void Awake()
+    protected override void Awake()
     {
         base.Awake();
     }
@@ -69,7 +69,6 @@ public class Land : Singleton<Land>
 
     public static void Main(string[] args)
     {
-        Land land = new Land();
         Debug.Log("main");
         Debug.Log(Random.Range(1, 5));
     }

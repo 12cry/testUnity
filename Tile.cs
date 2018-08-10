@@ -26,17 +26,18 @@ public class Tile : MonoBehaviour
         }
 
 
-        GameCtrl.cleanTiles();
+        GameCtrl.cleanMoveableTileList();
         GameCtrl.currentSelectedPlayer = null;
     }
 
     public void enableMove()
     {
-        //...
+        //todo
         canMove = true;
     }
     public void disableMove()
     {
+        //todo
         canMove = false;
     }
     public void setTileType(int buildableID)
@@ -48,7 +49,7 @@ public class Tile : MonoBehaviour
     {
         Material m = buildable.tileMaterial;
         this.GetComponent<MeshRenderer>().sharedMaterial = m;
-        
+
     }
 
 }

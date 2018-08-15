@@ -1,54 +1,43 @@
 ﻿using UnityEngine;
 
-public class Tile : MonoBehaviour
-{
+public class Tile : MonoBehaviour {
     public int x { get; set; }
     public int z { get; set; }
-    bool canMove { get; set; }
+    public bool canMove = false;
 
-    private void Awake()
-    {
+    private void Awake () {
 
     }
-    private void OnMouseDown()
-    {
-        Debug.Log("tile-OnMouseDown-----------");
+    private void OnMouseDown () {
         GameCtrl.currentSelectedTile = this;
         Player player = GameCtrl.currentSelectedPlayer;
-        if (canMove)
-        {
-            player.move();
-            BuildInfoUI.instance.hide();
-        }
-        else
-        {
-            BuildInfoUI.instance.show();
+        if (canMove) {
+            player.move (this);
+            BuildInfoUI.instance.hide ();
+            return ;
+        } else {
+            BuildInfoUI.instance.show ();
         }
 
-
-        GameCtrl.cleanMoveableTileList();
+        GameCtrl.clean ();
         GameCtrl.currentSelectedPlayer = null;
     }
 
-    public void enableMove()
-    {
+    public void enableMove () {
         //todo
         canMove = true;
     }
-    public void disableMove()
-    {
+    public void disableMove () {
         //todo
         canMove = false;
     }
-    public void setTileType(int buildableID)
-    {
-        DieBuildable buildable = (DieBuildable)GameConfigure.instance.buildableLibrary[buildableID];
-        this.setTileType(buildable);
+    public void setTileType (int buildableID) {
+        DieBuildable buildable = (DieBuildable) GameConfigure.instance.buildableLibrary[buildableID];
+        this.setTileType (buildable);
     }
-    public void setTileType(DieBuildable buildable)
-    {
+    public void setTileType (DieBuildable buildable) {
         Material m = buildable.tileMaterial;
-        this.GetComponent<MeshRenderer>().sharedMaterial = m;
+        this.GetComponent<MeshRenderer> ().sharedMaterial = m;
 
     }
 

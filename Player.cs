@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using testUnity;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -7,11 +8,28 @@ public class Player : MonoBehaviour {
     public int z { get; set; }
     public bool canAttack = false;
     public int team;
-
-    void Awake()
-    {
-        x = int.Parse(transform.position.x.ToString());
-        z = int.Parse(transform.position.z.ToString());
+    public AIState aIState = AIState.Finish;
+    Player attackTarget;
+    void Awake () {
+        x = int.Parse (transform.position.x.ToString ());
+        z = int.Parse (transform.position.z.ToString ());
+    }
+    void Update () {
+        if (aIState == AIState.Ready) {
+            aIState = AIState.Playing;
+            autoRun ();
+        }
+        if (aIState == AIState.AfterMove) {
+            aIState = AIState.Attacking;
+            GameCtrl.clean ();
+            showAttackable ();
+            if (GameCtrl.attackablePlayerList.Count > 0) {
+                attack (GameCtrl.attackablePlayerList[0]);
+            }
+            GameCtrl.clean ();
+            aIState = AIState.Finish;
+            GameCtrl.currentAIState = AIState.Finish;
+        }
     }
     private void OnMouseDown () {
         if (GameCtrl.currentSelectedPlayer == this) {
@@ -42,15 +60,11 @@ public class Player : MonoBehaviour {
                             showMoveable ();
                             if (player.canAttack) {
                                 attack (player);
+                                GameCtrl.clean ();
                             } else {
                                 Tile tile = getShortestDistanceTile (player);
                                 move (tile);
-                                if (GameCtrl.attackablePlayerList.Count > 0) {
-                                    attack (GameCtrl.attackablePlayerList[0]);
-                                }
                             }
-                            GameCtrl.clean ();
-                            Debug.Log (player.name);
                             return;
 
                         }
@@ -58,14 +72,29 @@ public class Player : MonoBehaviour {
                 }
             }
         }
+        showMoveable ();
+        move (getRandomTile ());
+    }
+    public void move (Tile tile) {
+        aIState = AIState.Moving;
+        iTween.MoveTo (gameObject, iTween.Hash ("position", new Vector3 (tile.x, 0, tile.z), "time", 2f, "oncomplete", "afterMove"));
+        // iTween.MoveTo (gameObject, new Vector3 (tile.x, 0, tile.z), 0.2f);
+        this.x = tile.x;
+        this.z = tile.z;
+    }
+    void afterMove () {
+        aIState = AIState.AfterMove;
     }
 
+    Tile getRandomTile () {
+        return GameCtrl.moveableTileList[0];
+    }
     Tile getShortestDistanceTile (Player player) {
         float distance = Mathf.Infinity;
         Tile result = null;
         foreach (Tile tile in GameCtrl.moveableTileList) {
             float distance2 = (tile.transform.position - player.transform.position).sqrMagnitude;
-            if ( distance2< distance) {
+            if (distance2 < distance) {
                 result = tile;
                 distance = distance2;
             }
@@ -87,7 +116,7 @@ public class Player : MonoBehaviour {
                 Player player = findPlayer (x + i, z + j);
                 if (player != null) {
                     player.enableAttack ();
-                    GameCtrl.attackablePlayerList.Add(player);
+                    GameCtrl.attackablePlayerList.Add (player);
                 }
             }
         }
@@ -131,15 +160,5 @@ public class Player : MonoBehaviour {
     public void enableAttack () {
         canAttack = true;
     }
-    public void move (Tile tile) {
-        iTween.MoveTo (gameObject, iTween.Hash ("position", new Vector3 (tile.x, 0, tile.z), "time", 0.2f));
-        // iTween.MoveTo (gameObject, new Vector3 (tile.x, 0, tile.z), 0.2f);
-        this.x = tile.x;
-        this.z = tile.z;
-
-        GameCtrl.clean ();
-        this.showAttackable ();
-    }
-
 
 }

@@ -12,6 +12,7 @@ public class LifeBuildable : Buildable
         Player player = Instantiate(this.player);
         Transform t = player.GetComponent<Transform>();
         t.localPosition = new Vector3(tile.x,0,tile.z);
+        player.team = GameCtrl.currentTeam;
         player.x=tile.x;
         player.z=tile.z;
     }

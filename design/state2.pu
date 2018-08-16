@@ -1,0 +1,11 @@
+
+@startuml
+note "AI state" as N1
+[*] --> Playing
+Playing -> Moving
+Moving -> Playing
+Playing -> Finish
+Moving -> Finish
+Finish --> [*]
+@enduml
+

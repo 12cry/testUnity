@@ -1,0 +1,23 @@
+@startuml
+note "game state" as N1
+
+[*] --> Normal
+Normal -> Paused
+Normal -> AIRuning
+Normal -> GameOver
+AIRuning -> Normal
+AIRuning -> Paused
+AIRuning -> GameOver
+Paused -> GameOver
+GameOver --> [*]
+
+state AIRuning{
+    note "AI state" as N2
+    [*] --> Playing
+    Playing -> Moving
+    Moving -> Playing
+    Playing -> Finish
+    Moving -> Finish
+    Finish --> [*]
+}
+@enduml

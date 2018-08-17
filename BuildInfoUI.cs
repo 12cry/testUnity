@@ -18,6 +18,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
     void Start () {
         foreach (Buildable buildable in GameConfigure.instance.buildableLibrary) {
             BuildableButtonUI newBTUI = Instantiate (GameConfigure.instance.buildableButtonUI, transform);
+            newBTUI.name = buildable.type.ToString ();
             newBTUI.buildable = buildable;
             newBTUI.text.text = buildable.buildName;
             newBTUI.transform.localPosition = new Vector3 (1000, 0, 0);
@@ -30,12 +31,15 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
         BuildableType type = tile.buildableType;
         List<BuildableType> typeList = new List<BuildableType> ();
         if (type == BuildableType.Flat) {
-            typeList.Add (BuildableType.City);
-            typeList.Add (BuildableType.Mountain);
+            if (tile.city == null) {
+                typeList.Add (BuildableType.City);
+            }
+            if (tile.city != null && tile.city.civID == GameCtrl.currentCivID) {
+                typeList.Add (BuildableType.Farm);
+            }
         } else if (type == BuildableType.Mountain) {
-            typeList.Add (BuildableType.City);
         } else if (type == BuildableType.City) {
-
+            typeList.Add (BuildableType.Warrior);
         }
         return typeList;
     }
@@ -56,6 +60,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
             BuildableButtonUI bbui = buildableButtonUIDictionary[type];
             bbui.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
             i++;
+
         }
         GetComponent<Canvas> ().enabled = true;
     }

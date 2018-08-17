@@ -5,6 +5,7 @@ namespace testUnity
         Flat,
         Mountain,
         City,
+        Farm,
         Warrior,
     }
 }

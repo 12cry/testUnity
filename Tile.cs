@@ -7,6 +7,7 @@ public class Tile : MonoBehaviour {
     public int z { get; set; }
     public bool canMove = false;
     public BuildableType buildableType;
+    public City city;
 
     private void Awake () {
 

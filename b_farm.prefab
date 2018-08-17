@@ -19,9 +19,9 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4590768178137458}
-  - component: {fileID: 114901163541211820}
+  - component: {fileID: 114281577123785692}
   m_Layer: 0
-  m_Name: b_warrior
+  m_Name: b_farm
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114901163541211820
+--- !u!114 &114281577123785692
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,10 +48,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307332561421784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 36c059a03934409489fd97c8979844c2, type: 3}
+  m_Script: {fileID: 11500000, guid: 8cccaf47cc6e7f44ca8b6b7b297f1328, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  type: 4
-  buildName: warrior
-  money: 0
-  player: {fileID: 114599829777665970, guid: de712c0ea8195024c86b1da255091c8c, type: 2}
+  type: 3
+  buildName: farm
+  money: 2
+  tileMaterial: {fileID: 2100000, guid: ce659686023c77b46936467020230583, type: 2}

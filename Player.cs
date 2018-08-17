@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
     public int z { get; set; }
     public bool canAttack = false;
     public bool isAI = false;
-    public int team;
+    public int civID;
     public AIState aIState = AIState.Finish;
     Player attackTarget;
     void Awake () {
@@ -30,10 +30,9 @@ public class Player : MonoBehaviour {
                     attack (GameCtrl.attackablePlayerList[0]);
                 }
                 GameCtrl.clean ();
-                aIState = AIState.Finish;
                 GameCtrl.currentAIState = AIState.Finish;
-
             }
+            aIState = AIState.Finish;
         }
     }
     private void OnMouseDown () {
@@ -60,7 +59,7 @@ public class Player : MonoBehaviour {
 
                     if (Mathf.Abs (i) == circle || Mathf.Abs (j) == circle) {
                         Player player = findPlayer (x + i, z + j);
-                        if (player != null && player.team != team) {
+                        if (player != null && player.civID != civID) {
                             showAttackable ();
                             showMoveable ();
                             if (player.canAttack) {
@@ -81,6 +80,7 @@ public class Player : MonoBehaviour {
         move (getRandomTile ());
     }
     public void move (Tile tile) {
+        Debug.Log (tile.x);
         aIState = AIState.Moving;
         iTween.MoveTo (gameObject, iTween.Hash ("position", new Vector3 (tile.x, 0, tile.z), "time", 1, "oncomplete", "afterMove"));
         // iTween.MoveTo (gameObject, new Vector3 (tile.x, 0, tile.z), 0.2f);
@@ -119,7 +119,7 @@ public class Player : MonoBehaviour {
                 }
 
                 Player player = findPlayer (x + i, z + j);
-                if (player != null) {
+                if (player != null && player.civID != GameCtrl.currentCivID) {
                     player.enableAttack ();
                     GameCtrl.attackablePlayerList.Add (player);
                 }
@@ -147,10 +147,9 @@ public class Player : MonoBehaviour {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
 
-                if (x + i < 0 || x + i >= Land.instance.x || z + j < 0 || z + j >= Land.instance.z) {
+                if (x + i < 0 || x + i >= Land.instance.x || z + j < 0 || z + j >= Land.instance.z || (i == 0 & j == 0)) {
                     continue;
                 }
-
                 Tile tile = tiles[x + i, z + j];
                 GameCtrl.moveableTileList.Add (tile);
                 tile.enableMove ();

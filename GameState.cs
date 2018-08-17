@@ -3,7 +3,7 @@ namespace testUnity
     
     public enum GameState
     {
-        Normal,
+        HumanRuning,
         Paused,
         AIRuning,
         GameOver,

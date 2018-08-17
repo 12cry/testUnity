@@ -10,14 +10,14 @@ namespace testUnity {
                 if (GameCtrl.currentAIState == AIState.Finish) {
                     if (queue.Count > 0) {
                         Player player = queue.Dequeue ();
-                        Debug.Log (player.name);
                         if (player != null) {
                             GameCtrl.currentAIState = AIState.Playing;
                             player.aIState = AIState.Ready;
                         }
 
                     } else {
-                        GameCtrl.currentGameState = GameState.Normal;
+                        GameCtrl.currentGameState = GameState.HumanRuning;
+                        ResourceUI.instance.moneyValueText.text = "2";
                     }
 
                 }
@@ -28,7 +28,6 @@ namespace testUnity {
             GameObject[] gos = GameObject.FindGameObjectsWithTag ("team1");
             foreach (GameObject go in gos) {
                 Player player = go.GetComponent<Player> ();
-                Debug.Log (player.name + "------" + player.aIState);
                 queue.Enqueue (player);
             }
             GameCtrl.currentGameState = GameState.AIRuning;

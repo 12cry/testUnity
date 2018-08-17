@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using testUnity;
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "BuildableLibrary.asset", menuName = "cry/buildableList", order = 1)]
@@ -8,7 +9,7 @@ public class BuildableLibrary : ScriptableObject, IList<Buildable>, IDictionary<
 {
 
     public List<Buildable> buildableList;
-    Dictionary<int, Buildable> buildableDictionary;
+    Dictionary<BuildableType, Buildable> buildableDictionary;
 
 
 
@@ -18,7 +19,7 @@ public class BuildableLibrary : ScriptableObject, IList<Buildable>, IDictionary<
         {
             return;
         }
-        buildableDictionary = buildableList.ToDictionary(t => t.id);
+        buildableDictionary = buildableList.ToDictionary(t => t.type);
     }
 
 

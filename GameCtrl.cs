@@ -9,7 +9,7 @@ public class GameCtrl {
     public static List<Tile> moveableTileList = new List<Tile> ();
     public static List<Player> attackablePlayerList = new List<Player> ();
     public static int totalNumberOfTeam = 3;
-    public static int currentTeam = 2;
+    public static int currentTeam = 0;
     public static GameState currentGameState = GameState.Normal;
     public static AIState currentAIState = AIState.Finish;
 

@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4590768178137458}
   - component: {fileID: 114901163541211820}
   m_Layer: 0
-  m_Name: Buildable2
+  m_Name: b_warrior
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -51,6 +51,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36c059a03934409489fd97c8979844c2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  id: 11
-  buildName: aa
+  type: 3
+  buildName: warrior
   player: {fileID: 114599829777665970, guid: de712c0ea8195024c86b1da255091c8c, type: 2}

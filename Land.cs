@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using Cry.Common;
+using testUnity;
 using UnityEngine;
 
 public class Land : Singleton<Land>
@@ -33,6 +34,7 @@ public class Land : Singleton<Land>
                 newTile.z = j;
                 newTile.transform.parent = transform;
                 newTile.transform.localPosition = v;
+                newTile.buildableType = BuildableType.Flat;
 
                 // newTile.setTileType(Random.Range(0, 2));
                 // GameCtrl.tiles[i][j] = newTile;

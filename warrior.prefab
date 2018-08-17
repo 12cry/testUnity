@@ -24,8 +24,8 @@ GameObject:
   - component: {fileID: 135695562228690964}
   - component: {fileID: 114599829777665970}
   m_Layer: 0
-  m_Name: player1
-  m_TagString: Untagged
+  m_Name: warrior
+  m_TagString: team0
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,6 +96,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8c02a0406e83140af7d6e60247c899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canAttack: 0
+  isAI: 0
+  team: 0
+  aIState: 5
 --- !u!135 &135695562228690964
 SphereCollider:
   m_ObjectHideFlags: 1

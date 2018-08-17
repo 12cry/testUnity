@@ -5,7 +5,6 @@ namespace testUnity
     {
         Normal,
         Paused,
-        AIReady,
         AIRuning,
         GameOver,
     }

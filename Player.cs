@@ -7,6 +7,7 @@ public class Player : MonoBehaviour {
     public int x { get; set; }
     public int z { get; set; }
     public bool canAttack = false;
+    public bool isAI = false;
     public int team;
     public AIState aIState = AIState.Finish;
     Player attackTarget;
@@ -20,27 +21,31 @@ public class Player : MonoBehaviour {
             autoRun ();
         }
         if (aIState == AIState.AfterMove) {
-            aIState = AIState.Attacking;
             GameCtrl.clean ();
             showAttackable ();
-            if (GameCtrl.attackablePlayerList.Count > 0) {
-                attack (GameCtrl.attackablePlayerList[0]);
+
+            if (isAI) {
+                if (GameCtrl.attackablePlayerList.Count > 0) {
+                    aIState = AIState.Attacking;
+                    attack (GameCtrl.attackablePlayerList[0]);
+                }
+                GameCtrl.clean ();
+                aIState = AIState.Finish;
+                GameCtrl.currentAIState = AIState.Finish;
+
             }
-            GameCtrl.clean ();
-            aIState = AIState.Finish;
-            GameCtrl.currentAIState = AIState.Finish;
         }
     }
     private void OnMouseDown () {
-        if (GameCtrl.currentSelectedPlayer == this) {
-            return;
-        }
-        GameCtrl.currentSelectedPlayer = this;
         if (canAttack) {
             attack (this);
             GameCtrl.clean ();
             return;
         }
+        if (GameCtrl.currentSelectedPlayer == this) {
+            return;
+        }
+        GameCtrl.currentSelectedPlayer = this;
         showAttackable ();
         showMoveable ();
     }
@@ -77,7 +82,7 @@ public class Player : MonoBehaviour {
     }
     public void move (Tile tile) {
         aIState = AIState.Moving;
-        iTween.MoveTo (gameObject, iTween.Hash ("position", new Vector3 (tile.x, 0, tile.z), "time", 2f, "oncomplete", "afterMove"));
+        iTween.MoveTo (gameObject, iTween.Hash ("position", new Vector3 (tile.x, 0, tile.z), "time", 1, "oncomplete", "afterMove"));
         // iTween.MoveTo (gameObject, new Vector3 (tile.x, 0, tile.z), 0.2f);
         this.x = tile.x;
         this.z = tile.z;

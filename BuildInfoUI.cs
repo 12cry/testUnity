@@ -34,7 +34,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
             if (tile.city == null) {
                 typeList.Add (BuildableType.City);
             }
-            if (tile.city != null && tile.city.civID == GameCtrl.currentCivID) {
+            if (tile.city != null && tile.city.civID == Static.currentCivID) {
                 typeList.Add (BuildableType.Farm);
             }
         } else if (type == BuildableType.Mountain) {
@@ -44,7 +44,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
         return typeList;
     }
     public void show () {
-        if (GameCtrl.currentSelectedTile == null) {
+        if (Static.currentSelectedTile == null) {
             return;
         }
         if (oldBuildableTypelist != null) {
@@ -53,7 +53,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
                 bbui.transform.localPosition = new Vector3 (1000, 0, 0);
             }
         }
-        List<BuildableType> buildableTypelist = this.getBuildableTypeList (GameCtrl.currentSelectedTile);
+        List<BuildableType> buildableTypelist = this.getBuildableTypeList (Static.currentSelectedTile);
         oldBuildableTypelist = buildableTypelist;
         int i = 1;
         foreach (BuildableType type in buildableTypelist) {

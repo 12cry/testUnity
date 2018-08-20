@@ -6,11 +6,10 @@ using UnityEngine;
 public class Player : MonoBehaviour {
     public int x { get; set; }
     public int z { get; set; }
-    public bool canAttack = false;
+    public bool canBeAttacked = false;
     public bool isAI = false;
     public int civID;
     public AIState aIState = AIState.Finish;
-    Player attackTarget;
     void Awake () {
         x = int.Parse (transform.position.x.ToString ());
         z = int.Parse (transform.position.z.ToString ());
@@ -21,35 +20,34 @@ public class Player : MonoBehaviour {
             autoRun ();
         }
         if (aIState == AIState.AfterMove) {
-            GameCtrl.clean ();
+            Static.clean ();
             showAttackable ();
 
             if (isAI) {
-                if (GameCtrl.attackablePlayerList.Count > 0) {
+                if (Static.attackablePlayerList.Count > 0) {
                     aIState = AIState.Attacking;
-                    attack (GameCtrl.attackablePlayerList[0]);
+                    attack (Static.attackablePlayerList[0]);
                 }
-                GameCtrl.clean ();
-                GameCtrl.currentAIState = AIState.Finish;
+                Static.clean ();
+                Static.currentAIState = AIState.Finish;
             }
             aIState = AIState.Finish;
         }
     }
     private void OnMouseDown () {
-        if (canAttack) {
+        if (canBeAttacked) {
             attack (this);
-            GameCtrl.clean ();
+            Static.clean ();
             return;
         }
-        if (GameCtrl.currentSelectedPlayer == this) {
+        if (Static.currentSelectedPlayer == this) {
             return;
         }
-        GameCtrl.currentSelectedPlayer = this;
+        Static.currentSelectedPlayer = this;
         showAttackable ();
         showMoveable ();
     }
     public void autoRun () {
-        Debug.Log ("autoRun-----");
         for (int circle = 1; circle < Mathf.Max (Land.instance.x, Land.instance.z); circle++) {
             for (int i = -circle; i < circle; i++) {
                 for (int j = -circle; j < circle; j++) {
@@ -62,9 +60,9 @@ public class Player : MonoBehaviour {
                         if (player != null && player.civID != civID) {
                             showAttackable ();
                             showMoveable ();
-                            if (player.canAttack) {
+                            if (player.canBeAttacked) {
                                 attack (player);
-                                GameCtrl.clean ();
+                                Static.clean ();
                             } else {
                                 Tile tile = getShortestDistanceTile (player);
                                 move (tile);
@@ -92,12 +90,12 @@ public class Player : MonoBehaviour {
     }
 
     Tile getRandomTile () {
-        return GameCtrl.moveableTileList[0];
+        return Static.moveableTileList[0];
     }
     Tile getShortestDistanceTile (Player player) {
         float distance = Mathf.Infinity;
         Tile result = null;
-        foreach (Tile tile in GameCtrl.moveableTileList) {
+        foreach (Tile tile in Static.moveableTileList) {
             float distance2 = (tile.transform.position - player.transform.position).sqrMagnitude;
             if (distance2 < distance) {
                 result = tile;
@@ -119,9 +117,9 @@ public class Player : MonoBehaviour {
                 }
 
                 Player player = findPlayer (x + i, z + j);
-                if (player != null && player.civID != GameCtrl.currentCivID) {
+                if (player != null && player.civID != Static.currentCivID) {
                     player.enableAttack ();
-                    GameCtrl.attackablePlayerList.Add (player);
+                    Static.attackablePlayerList.Add (player);
                 }
             }
         }
@@ -151,7 +149,7 @@ public class Player : MonoBehaviour {
                     continue;
                 }
                 Tile tile = tiles[x + i, z + j];
-                GameCtrl.moveableTileList.Add (tile);
+                Static.moveableTileList.Add (tile);
                 tile.enableMove ();
 
             }
@@ -159,10 +157,10 @@ public class Player : MonoBehaviour {
     }
 
     public void disableAttack () {
-        canAttack = false;
+        canBeAttacked = false;
     }
     public void enableAttack () {
-        canAttack = true;
+        canBeAttacked = true;
     }
 
 }

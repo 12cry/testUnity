@@ -6,17 +6,19 @@ namespace testUnity {
         Queue<Player> queue = new Queue<Player> ();
         void Update () {
 
-            if (GameCtrl.currentGameState == GameState.AIRuning) {
-                if (GameCtrl.currentAIState == AIState.Finish) {
+            if (Static.currentGameState == GameState.AIRuning) {
+                Debug.Log ("AIRuning-----");
+                if (Static.currentAIState == AIState.Finish) {
                     if (queue.Count > 0) {
                         Player player = queue.Dequeue ();
                         if (player != null) {
-                            GameCtrl.currentAIState = AIState.Playing;
+                            Static.currentAIState = AIState.Playing;
                             player.aIState = AIState.Ready;
                         }
 
                     } else {
-                        GameCtrl.currentGameState = GameState.HumanRuning;
+                        Static.currentGameState = GameState.HumanRuning;
+                        Debug.Log ("HumanRuning-----");
                         ResourceUI.instance.moneyValueText.text = "2";
                     }
 
@@ -30,7 +32,7 @@ namespace testUnity {
                 Player player = go.GetComponent<Player> ();
                 queue.Enqueue (player);
             }
-            GameCtrl.currentGameState = GameState.AIRuning;
+            Static.currentGameState = GameState.AIRuning;
         }
     }
 

@@ -13,17 +13,17 @@ public class Tile : MonoBehaviour {
 
     }
     private void OnMouseDown () {
-        GameCtrl.currentSelectedTile = this;
+        Static.currentSelectedTile = this;
         if (canMove) {
-            Player player = GameCtrl.currentSelectedPlayer;
+            Player player = Static.currentSelectedPlayer;
             player.move (this);
             BuildInfoUI.instance.hide ();
         } else {
             BuildInfoUI.instance.show ();
         }
 
-        GameCtrl.clean ();
-        GameCtrl.currentSelectedPlayer = null;
+        Static.clean ();
+        Static.currentSelectedPlayer = null;
     }
 
     public void enableMove () {

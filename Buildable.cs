@@ -14,13 +14,6 @@ public abstract class Buildable : MonoBehaviour {
             return false;
         }
 
-// if(type==BuildableType.Farm){
-
-// }
-
-
-
-
         return true;
     }
     public void reduceMoney () {

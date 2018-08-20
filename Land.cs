@@ -37,7 +37,7 @@ public class Land : Singleton<Land>
                 newTile.buildableType = BuildableType.Flat;
 
                 // newTile.setTileType(Random.Range(0, 2));
-                // GameCtrl.tiles[i][j] = newTile;
+                // Static.tiles[i][j] = newTile;
                 tiles[i, j] = newTile;
             }
         }

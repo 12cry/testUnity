@@ -13,17 +13,17 @@ public class DieBuildable : Buildable {
             Debug.Log ("cannotBuild--------");
             return;
         }
-        GameCtrl.currentSelectedTile.setTileType (this);
+        Static.currentSelectedTile.setTileType (this);
 
         reduceMoney ();
 
         if (type == BuildableType.City) {
             City city = new City ();
-            city.id = GameCtrl.cityID++;
-            city.civID = GameCtrl.currentCivID;
+            city.id = Static.cityID++;
+            city.civID = Static.currentCivID;
 
             Tile[, ] tiles = Land.instance.tiles;
-            Tile currentTile = GameCtrl.currentSelectedTile;
+            Tile currentTile = Static.currentSelectedTile;
             int x = currentTile.x;
             int z = currentTile.z;
             for (int i = -1; i <= 1; i++) {

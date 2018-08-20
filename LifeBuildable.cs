@@ -1,4 +1,5 @@
 
+using testUnity;
 using UnityEngine;
 
 public class LifeBuildable : Buildable
@@ -8,11 +9,11 @@ public class LifeBuildable : Buildable
 
     public override void build()
     {
-        Tile tile = GameCtrl.currentSelectedTile;
+        Tile tile = Static.currentSelectedTile;
         Player player = Instantiate(this.player);
         Transform t = player.GetComponent<Transform>();
         t.localPosition = new Vector3(tile.x,0,tile.z);
-        player.civID = GameCtrl.currentCivID;
+        player.civID = Static.currentCivID;
         player.x=tile.x;
         player.z=tile.z;
     }

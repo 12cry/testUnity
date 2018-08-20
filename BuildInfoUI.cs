@@ -34,7 +34,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
             if (tile.city == null) {
                 typeList.Add (BuildableType.City);
             }
-            if (tile.city != null && tile.city.civID == Static.currentCivID) {
+            if (tile.city != null && tile.city.teamID == Static.currentTeamID) {
                 typeList.Add (BuildableType.Farm);
             }
         } else if (type == BuildableType.Mountain) {

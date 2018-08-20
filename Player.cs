@@ -8,7 +8,8 @@ public class Player : MonoBehaviour {
     public int z { get; set; }
     public bool canBeAttacked = false;
     public bool isAI = false;
-    public int civID;
+    // public int civID;
+    public int teamID;
     public AIState aIState = AIState.Finish;
     void Awake () {
         x = int.Parse (transform.position.x.ToString ());
@@ -35,9 +36,13 @@ public class Player : MonoBehaviour {
         }
     }
     private void OnMouseDown () {
+
         if (canBeAttacked) {
             attack (this);
             Static.clean ();
+            return;
+        }
+        if (isAI) {
             return;
         }
         if (Static.currentSelectedPlayer == this) {
@@ -57,7 +62,7 @@ public class Player : MonoBehaviour {
 
                     if (Mathf.Abs (i) == circle || Mathf.Abs (j) == circle) {
                         Player player = findPlayer (x + i, z + j);
-                        if (player != null && player.civID != civID) {
+                        if (player != null && player.teamID != teamID) {
                             showAttackable ();
                             showMoveable ();
                             if (player.canBeAttacked) {
@@ -105,6 +110,7 @@ public class Player : MonoBehaviour {
         return result;
     }
     void attack (Player player) {
+        Debug.Log(player.name);
         player.gameObject.SetActive (false);
         Object.Destroy (player);
     }
@@ -117,7 +123,7 @@ public class Player : MonoBehaviour {
                 }
 
                 Player player = findPlayer (x + i, z + j);
-                if (player != null && player.civID != Static.currentCivID) {
+                if (player != null && player.teamID != Static.currentTeamID) {
                     player.enableAttack ();
                     Static.attackablePlayerList.Add (player);
                 }
@@ -160,6 +166,7 @@ public class Player : MonoBehaviour {
         canBeAttacked = false;
     }
     public void enableAttack () {
+        this.GetComponent<MeshRenderer> ().sharedMaterial = Static.getMbMaterial();
         canBeAttacked = true;
     }
 

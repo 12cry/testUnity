@@ -2,7 +2,7 @@ using testUnity;
 using UnityEditor;
 using UnityEngine;
 
-public class DieBuildable : Buildable {
+public class StaticBuildable : Buildable {
 
     public Material tileMaterial;
 
@@ -20,7 +20,8 @@ public class DieBuildable : Buildable {
         if (type == BuildableType.City) {
             City city = new City ();
             city.id = Static.cityID++;
-            city.civID = Static.currentCivID;
+            // city.civID = Static.currentCivID;
+            city.teamID = Static.currentTeamID;
 
             Tile[, ] tiles = Land.instance.tiles;
             Tile currentTile = Static.currentSelectedTile;

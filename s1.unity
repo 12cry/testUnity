@@ -422,9 +422,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8c02a0406e83140af7d6e60247c899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 0
+  canBeAttacked: 0
   isAI: 1
-  civID: 1
+  teamID: 1
   aIState: 5
 --- !u!65 &338160955
 BoxCollider:
@@ -453,7 +453,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 53fab304a2897c04395ebdf9766795c7, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -544,7 +544,7 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RenderingLayerMask: 4294967295
   m_Materials:
-  - {fileID: 2100000, guid: 53fab304a2897c04395ebdf9766795c7, type: 2}
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -595,9 +595,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3b8c02a0406e83140af7d6e60247c899, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  canAttack: 0
+  canBeAttacked: 0
   isAI: 1
-  civID: 1
+  teamID: 1
   aIState: 5
 --- !u!1 &589183536
 GameObject:
@@ -1520,6 +1520,11 @@ Prefab:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 23603302719769566, guid: de712c0ea8195024c86b1da255091c8c,
+        type: 2}
+      propertyPath: m_Materials.Array.size
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4138116359681658, guid: de712c0ea8195024c86b1da255091c8c, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -1556,6 +1561,21 @@ Prefab:
       propertyPath: m_Name
       value: player1
       objectReference: {fileID: 0}
+    - target: {fileID: 33665189357517236, guid: de712c0ea8195024c86b1da255091c8c,
+        type: 2}
+      propertyPath: m_Mesh
+      value: 
+      objectReference: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
+    - target: {fileID: 23603302719769566, guid: de712c0ea8195024c86b1da255091c8c,
+        type: 2}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: 83e09e7abecead546962ba5356b29cec, type: 2}
+    - target: {fileID: 23603302719769566, guid: de712c0ea8195024c86b1da255091c8c,
+        type: 2}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: de712c0ea8195024c86b1da255091c8c, type: 2}
   m_IsPrefabParent: 0

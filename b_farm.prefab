@@ -19,7 +19,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4590768178137458}
-  - component: {fileID: 114281577123785692}
+  - component: {fileID: 114196583751363256}
   m_Layer: 0
   m_Name: b_farm
   m_TagString: Untagged
@@ -40,7 +40,7 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &114281577123785692
+--- !u!114 &114196583751363256
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
@@ -48,7 +48,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1307332561421784}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8cccaf47cc6e7f44ca8b6b7b297f1328, type: 3}
+  m_Script: {fileID: 11500000, guid: de233e2eca37e8545b86184d84b1de8b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   type: 3

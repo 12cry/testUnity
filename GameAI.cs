@@ -7,11 +7,11 @@ namespace testUnity {
         void Update () {
 
             if (Static.currentGameState == GameState.AIRuning) {
-                Debug.Log ("AIRuning-----");
                 if (Static.currentAIState == AIState.Finish) {
                     if (queue.Count > 0) {
                         Player player = queue.Dequeue ();
                         if (player != null) {
+                            Debug.Log ("AIRuning-----");
                             Static.currentAIState = AIState.Playing;
                             player.aIState = AIState.Ready;
                         }
@@ -20,6 +20,7 @@ namespace testUnity {
                         Static.currentGameState = GameState.HumanRuning;
                         Debug.Log ("HumanRuning-----");
                         ResourceUI.instance.moneyValueText.text = "2";
+                        Static.currentTeamID = 0;
                     }
 
                 }
@@ -33,6 +34,7 @@ namespace testUnity {
                 queue.Enqueue (player);
             }
             Static.currentGameState = GameState.AIRuning;
+            Static.currentTeamID = 1;
         }
     }
 

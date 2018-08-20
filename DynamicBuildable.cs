@@ -2,7 +2,7 @@
 using testUnity;
 using UnityEngine;
 
-public class LifeBuildable : Buildable
+public class DynamicBuildable : Buildable
 {
 
     public Player player;
@@ -13,7 +13,7 @@ public class LifeBuildable : Buildable
         Player player = Instantiate(this.player);
         Transform t = player.GetComponent<Transform>();
         t.localPosition = new Vector3(tile.x,0,tile.z);
-        player.civID = Static.currentCivID;
+        player.teamID = Static.currentTeamID;
         player.x=tile.x;
         player.z=tile.z;
     }

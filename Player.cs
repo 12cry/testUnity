@@ -8,31 +8,56 @@ public class Player : MonoBehaviour {
     public int z { get; set; }
     public bool canBeAttacked = false;
     public bool isAI = false;
-    // public int civID;
     public int teamID;
-    public AIState aIState = AIState.Finish;
+    public PlayerState state = PlayerState.Finish;
     void Awake () {
         x = int.Parse (transform.position.x.ToString ());
         z = int.Parse (transform.position.z.ToString ());
     }
+
+    public void init () {
+        GetComponent<Renderer> ().material.color = getTeamColor ();
+    }
+    Color getTeamColor () {
+        Color color = Color.white;
+        if (teamID == 1) {
+            color = Color.red;
+        }
+        return color;
+    }
+    void DialTheCloud () {
+        Team team = Static.teamDic[teamID];
+        for (int i = -1; i <= 1; i++) {
+            for (int j = -1; j <= 1; j++) {
+                if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
+                    continue;
+                }
+                team.visualTile[x + i, z + j] = true;
+            }
+        }
+    }
     void Update () {
-        if (aIState == AIState.Ready) {
-            aIState = AIState.Playing;
+
+        if (state == PlayerState.Finish) {
+            return;
+        }
+        if (state == PlayerState.Ready) {
+            state = PlayerState.Playing;
             autoRun ();
         }
-        if (aIState == AIState.AfterMove) {
+        if (state == PlayerState.AfterMove) {
             Static.clean ();
             showAttackable ();
 
             if (isAI) {
                 if (Static.attackablePlayerList.Count > 0) {
-                    aIState = AIState.Attacking;
+                    state = PlayerState.Attacking;
                     attack (Static.attackablePlayerList[0]);
                 }
                 Static.clean ();
-                Static.currentAIState = AIState.Finish;
+                Static.currentPlayerState = PlayerState.Finish;
             }
-            aIState = AIState.Finish;
+            state = PlayerState.Finish;
         }
     }
     private void OnMouseDown () {
@@ -53,10 +78,10 @@ public class Player : MonoBehaviour {
         showMoveable ();
     }
     public void autoRun () {
-        for (int circle = 1; circle < Mathf.Max (Land.instance.x, Land.instance.z); circle++) {
+        for (int circle = 1; circle < Mathf.Max (Land.instance.maxX, Land.instance.maxZ); circle++) {
             for (int i = -circle; i < circle; i++) {
                 for (int j = -circle; j < circle; j++) {
-                    if (x + i < 0 || x + i >= Land.instance.x || z + j < 0 || z + j >= Land.instance.z || (i == 0 & j == 0)) {
+                    if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
                         continue;
                     }
 
@@ -83,15 +108,14 @@ public class Player : MonoBehaviour {
         move (getRandomTile ());
     }
     public void move (Tile tile) {
-        Debug.Log (tile.x);
-        aIState = AIState.Moving;
+        state = PlayerState.Moving;
         iTween.MoveTo (gameObject, iTween.Hash ("position", new Vector3 (tile.x, 0, tile.z), "time", 1, "oncomplete", "afterMove"));
         // iTween.MoveTo (gameObject, new Vector3 (tile.x, 0, tile.z), 0.2f);
         this.x = tile.x;
         this.z = tile.z;
     }
     void afterMove () {
-        aIState = AIState.AfterMove;
+        state = PlayerState.AfterMove;
     }
 
     Tile getRandomTile () {
@@ -110,7 +134,7 @@ public class Player : MonoBehaviour {
         return result;
     }
     void attack (Player player) {
-        Debug.Log(player.name);
+        Debug.Log (player.name);
         player.gameObject.SetActive (false);
         Object.Destroy (player);
     }
@@ -118,7 +142,7 @@ public class Player : MonoBehaviour {
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
 
-                if (x + i < 0 || x + i >= Land.instance.x || z + j < 0 || z + j >= Land.instance.z || (i == 0 & j == 0)) {
+                if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
                     continue;
                 }
 
@@ -147,11 +171,11 @@ public class Player : MonoBehaviour {
         return player;
     }
     void showMoveable () {
-        Tile[, ] tiles = Land.instance.tiles;
+        Tile[, ] tiles = Static.tiles;
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
 
-                if (x + i < 0 || x + i >= Land.instance.x || z + j < 0 || z + j >= Land.instance.z || (i == 0 & j == 0)) {
+                if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
                     continue;
                 }
                 Tile tile = tiles[x + i, z + j];
@@ -166,7 +190,7 @@ public class Player : MonoBehaviour {
         canBeAttacked = false;
     }
     public void enableAttack () {
-        this.GetComponent<MeshRenderer> ().sharedMaterial = Static.getMbMaterial();
+        this.GetComponent<MeshRenderer> ().sharedMaterial = Static.getMbMaterial ();
         canBeAttacked = true;
     }
 

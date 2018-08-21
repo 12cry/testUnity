@@ -4,37 +4,62 @@ using UnityEngine;
 namespace testUnity {
     public class GameAI : MonoBehaviour {
         Queue<Player> queue = new Queue<Player> ();
+        AIState state = AIState.Finish;
+
+        void Start () {
+        }
         void Update () {
 
-            if (Static.currentGameState == GameState.AIRuning) {
-                if (Static.currentAIState == AIState.Finish) {
+            if (state == AIState.Finish) {
+                return;
+            }
+
+            if (state == AIState.Ready) {
+                state = AIState.Building;
+                build ();
+                state = AIState.Builded;
+            }
+
+            if (state == AIState.Builded) {
+                GameObject[] gos = GameObject.FindGameObjectsWithTag ("team1");
+                foreach (GameObject go in gos) {
+                    Player player = go.GetComponent<Player> ();
+                    queue.Enqueue (player);
+                }
+                state = AIState.Playing;
+            }
+
+            if (state == AIState.Playing) {
+                if (Static.currentPlayerState == PlayerState.Finish) {
                     if (queue.Count > 0) {
                         Player player = queue.Dequeue ();
-                        if (player != null) {
-                            Debug.Log ("AIRuning-----");
-                            Static.currentAIState = AIState.Playing;
-                            player.aIState = AIState.Ready;
-                        }
-
+                        Static.currentPlayerState = PlayerState.Playing;
+                        player.state = PlayerState.Ready;
                     } else {
-                        Static.currentGameState = GameState.HumanRuning;
-                        Debug.Log ("HumanRuning-----");
-                        ResourceUI.instance.moneyValueText.text = "2";
-                        Static.currentTeamID = 0;
+                        state = AIState.Played;
                     }
-
                 }
             }
 
+            if (state == AIState.Played) {
+                Static.currentGameState = GameState.HumanRuning;
+                ResourceUI.instance.moneyValueText.text = "2";
+                Static.currentTeamID = 0;
+                state = AIState.Finish;
+            }
+
+        }
+
+        public void build () {
+            Team team = Static.teamDic[1];
+            int money = team.money;
+
+            
         }
         public void run () {
-            GameObject[] gos = GameObject.FindGameObjectsWithTag ("team1");
-            foreach (GameObject go in gos) {
-                Player player = go.GetComponent<Player> ();
-                queue.Enqueue (player);
-            }
             Static.currentGameState = GameState.AIRuning;
             Static.currentTeamID = 1;
+            state = AIState.Ready;
         }
     }
 

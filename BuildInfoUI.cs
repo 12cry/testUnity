@@ -8,7 +8,7 @@ using UnityEngine.UI;
 
 public class BuildInfoUI : Singleton<BuildInfoUI> {
 
-    List<BuildableButtonUI> buildableButtonUIList = new List<BuildableButtonUI> ();
+    public List<BuildableButtonUI> buildableButtonUIList = new List<BuildableButtonUI> ();
     Dictionary<BuildableType, BuildableButtonUI> buildableButtonUIDictionary;
     List<BuildableType> oldBuildableTypelist;
     protected override void Awake () {
@@ -17,12 +17,12 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
     }
     void Start () {
         foreach (Buildable buildable in GameConfigure.instance.buildableLibrary) {
-            BuildableButtonUI newBTUI = Instantiate (GameConfigure.instance.buildableButtonUI, transform);
-            newBTUI.name = buildable.type.ToString ();
-            newBTUI.buildable = buildable;
-            newBTUI.text.text = buildable.buildName;
-            newBTUI.transform.localPosition = new Vector3 (1000, 0, 0);
-            buildableButtonUIList.Add (newBTUI);
+            BuildableButtonUI newBBUT = Instantiate (GameConfigure.instance.buildableButtonUI, transform);
+            newBBUT.name = buildable.type.ToString ();
+            newBBUT.buildable = buildable;
+            newBBUT.text.text = buildable.buildName;
+            newBBUT.transform.localPosition = new Vector3 (1000, 0, 0);
+            buildableButtonUIList.Add (newBBUT);
         }
         buildableButtonUIDictionary = buildableButtonUIList.ToDictionary (t => t.buildable.type);
     }

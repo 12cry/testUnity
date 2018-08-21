@@ -9,8 +9,17 @@ namespace testUnity
         GameOver,
     }
 
-
     public enum AIState
+    {
+        Ready,
+        Building,
+        Builded,
+        Playing,
+        Played,
+        Finish,
+    }
+
+    public enum PlayerState
     {
         Ready,
         Playing,

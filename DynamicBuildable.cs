@@ -16,5 +16,6 @@ public class DynamicBuildable : Buildable
         player.teamID = Static.currentTeamID;
         player.x=tile.x;
         player.z=tile.z;
+        player.init();
     }
 }

@@ -9,7 +9,7 @@ public class BuildableLibrary : ScriptableObject, IList<Buildable>, IDictionary<
 {
 
     public List<Buildable> buildableList;
-    Dictionary<BuildableType, Buildable> buildableDictionary;
+    public Dictionary<BuildableType, Buildable> buildableDictionary;
 
 
 

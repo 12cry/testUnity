@@ -6,8 +6,7 @@ namespace testUnity {
         Queue<Player> queue = new Queue<Player> ();
         AIState state = AIState.Finish;
 
-        void Start () {
-        }
+        void Start () { }
         void Update () {
 
             if (state == AIState.Finish) {
@@ -44,21 +43,69 @@ namespace testUnity {
             if (state == AIState.Played) {
                 Static.currentGameState = GameState.HumanRuning;
                 ResourceUI.instance.moneyValueText.text = "2";
-                Static.currentTeamID = 0;
+                Static.currentTeam = Static.teamDic[0];
                 state = AIState.Finish;
             }
 
         }
 
         public void build () {
-            Team team = Static.teamDic[1];
+            Team team = Static.currentTeam;
             int money = team.money;
+            int cityMoney = Static.buildMoneyDic[BuildableType.City];
+            int warriorMoney = Static.buildMoneyDic[BuildableType.Warrior];
+            // enemy/resource
+            foreach (City city in team.cityList) {
+                int x = city.x;
+                int z = city.z;
+                int r = 2;
+                int meStrength = 0;
+                int enemyStrength = 0;
 
-            
+                if (money < warriorMoney) {
+                    break;
+                }
+                for (int i = -r; i <= r; i++) {
+                    for (int j = -r; j <= r; j++) {
+                        if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
+                            continue;
+                        }
+                        Player player = Static.findPlayer (x + i, z + j);
+                        if (player != null) {
+                            if (player.team == Static.currentTeam) {
+                                meStrength += 1;
+                            } else {
+                                enemyStrength += 1;
+                            }
+                        }
+                    }
+                }
+                if (meStrength < enemyStrength) {
+
+                }
+
+                if (city.getPlayerInCity () == null) {
+                    Static.currentSelectedTile = Static.tiles[city.x, city.z];
+                    Static.buildableDic[BuildableType.Warrior].build ();
+                }
+            }
+            if (money > cityMoney) {
+                Tile tile = getTheBestCityTile ();
+                if (tile != null) {
+                    Static.currentSelectedTile = tile;
+                    Static.buildableDic[BuildableType.City].build ();
+                }
+            }
+
+        }
+
+        Tile getTheBestCityTile () {
+
+            return null;
         }
         public void run () {
             Static.currentGameState = GameState.AIRuning;
-            Static.currentTeamID = 1;
+            Static.currentTeam = Static.teamDic[1];
             state = AIState.Ready;
         }
     }

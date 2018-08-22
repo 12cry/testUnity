@@ -16,7 +16,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
         // hide();
     }
     void Start () {
-        foreach (Buildable buildable in GameConfigure.instance.buildableLibrary) {
+        foreach (Buildable buildable in GameConfigure.instance.buildableLibrary.buildableList) {
             BuildableButtonUI newBBUT = Instantiate (GameConfigure.instance.buildableButtonUI, transform);
             newBBUT.name = buildable.type.ToString ();
             newBBUT.buildable = buildable;
@@ -34,7 +34,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
             if (tile.city == null) {
                 typeList.Add (BuildableType.City);
             }
-            if (tile.city != null && tile.city.teamID == Static.currentTeamID) {
+            if (tile.city != null && tile.city.team == Static.currentTeam) {
                 typeList.Add (BuildableType.Farm);
             }
         } else if (type == BuildableType.Mountain) {

@@ -4,7 +4,30 @@ namespace testUnity {
         public int z { get; set; }
         public int id { get; set; }
         public string name { get; set; }
-        // public int civID { get; set; }
-        public int teamID { get; set; }
+        public Team team { get; set; }
+
+        public void init () {
+            DialTheCloud ();
+            team.cityList.Add (this);
+        }
+        void DialTheCloud () {
+            for (int i = -1; i <= 1; i++) {
+                for (int j = -1; j <= 1; j++) {
+                    if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
+                        continue;
+                    }
+                    team.visualTile[x + i, z + j] = true;
+                }
+            }
+        }
+
+        public Player getPlayerInCity () {
+            foreach (Player player in team.playerList) {
+                if (player.x == x && player.z == z) {
+                    return player;
+                }
+            }
+            return null;
+        }
     }
 }

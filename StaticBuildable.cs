@@ -8,14 +8,7 @@ public class StaticBuildable : Buildable {
 
     public override void build () {
 
-        if (!canBuild ()) {
-            Debug.Log ("cannotBuild--------");
-            return;
-        }
         Static.currentSelectedTile.setTileType (this);
-
-        reduceMoney ();
-
         if (type == BuildableType.City) {
             Tile currentTile = Static.currentSelectedTile;
             int x = currentTile.x;
@@ -23,9 +16,10 @@ public class StaticBuildable : Buildable {
 
             City city = new City ();
             city.id = Static.cityID++;
-            city.teamID = Static.currentTeamID;
+            city.team = Static.currentTeam;
             city.x = x;
             city.z = z;
+            city.init();
 
             Tile[, ] tiles = Static.tiles;
             for (int i = -1; i <= 1; i++) {

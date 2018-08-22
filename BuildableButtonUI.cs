@@ -1,4 +1,5 @@
 ﻿using System;
+using testUnity;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
@@ -8,11 +9,22 @@ public class BuildableButtonUI : MonoBehaviour {
     public Text text;
     public Buildable buildable;
 
-    // public event Action<Buildable> buttonClick;
-
     public void onClick () {
-        // buttonClick(buildable);
+        if (buildable.money > Static.currentTeam.money) {
+            Debug.Log ("cannotBuild--------");
+            return;
+        }
+
         buildable.build ();
+
+        reduceMoney();
     }
+   
+    public void reduceMoney () {
+        Team team = Static.currentTeam;
+        team.money -= buildable.money;
+        ResourceUI.instance.moneyValueText.text = team.money.ToString ();
+    }
+
 
 }

@@ -47,13 +47,13 @@ public class Land : Singleton<Land> {
         team.money = 10;
         Static.teamDic[1] = team;
 
-        Dictionary<BuildableType, Buildable> buildableDictionary = GameConfigure.instance.buildableLibrary.buildableDictionary;
-        Static.currentTeamID = 0;
+        Dictionary<BuildableType, Buildable> buildableDictionary = Static.buildableDic;
+        Static.currentTeam = Static.teamDic[0];
         Static.currentSelectedTile = Static.tiles[Random.Range (1, maxX - 1), Random.Range (1, maxZ - 1)];
         buildableDictionary[BuildableType.City].build ();
         buildableDictionary[BuildableType.Warrior].build ();
 
-        Static.currentTeamID = 1;
+        Static.currentTeam = Static.teamDic[1];
         Static.currentSelectedTile = getInitBuildCityTile ();
         buildableDictionary[BuildableType.City].build ();
         buildableDictionary[BuildableType.Warrior].build ();

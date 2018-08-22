@@ -13,7 +13,7 @@ public class DynamicBuildable : Buildable
         Player player = Instantiate(this.player);
         Transform t = player.GetComponent<Transform>();
         t.localPosition = new Vector3(tile.x,0,tile.z);
-        player.teamID = Static.currentTeamID;
+        player.team = Static.currentTeam;
         player.x=tile.x;
         player.z=tile.z;
         player.init();

@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using Cry.Common;
 
 public class GameConfigure : Singleton<GameConfigure>
@@ -12,6 +13,7 @@ public class GameConfigure : Singleton<GameConfigure>
     {
         base.Awake();
         init();
+
     }
 
     void init()

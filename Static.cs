@@ -8,15 +8,31 @@ namespace testUnity {
         public static List<Tile> moveableTileList = new List<Tile> ();
         public static List<Player> attackablePlayerList = new List<Player> ();
         public static Dictionary<int, Team> teamDic = new Dictionary<int, Team> ();
+        public static Dictionary<BuildableType, int> buildMoneyDic;
+        public static Dictionary<BuildableType, Buildable> buildableDic;
         public static Tile currentSelectedTile { get; set; }
         public static Player currentSelectedPlayer { get; set; }
         public static GameState currentGameState = GameState.HumanRuning;
         public static PlayerState currentPlayerState = PlayerState.Finish;
-        public static int currentTeamID = 0;
-        public static int totalNumberOfTeam = 3;
+        public static Team currentTeam = Static.teamDic[0];
         public static int cityID = 0;
         public static Tile[, ] tiles;
 
+        public static Player findPlayer (int i, int j) {
+            Player player = null;
+            RaycastHit hit;
+            Vector3 pos = Camera.main.WorldToScreenPoint (new Vector3 (i, 0, j));
+            Ray ray = Camera.main.ScreenPointToRay (pos);
+
+            if (Physics.Raycast (ray, out hit)) {
+                player = hit.collider.GetComponent<Player> ();
+                if (player != null) {
+                    Debug.DrawLine (ray.origin, hit.point, Color.red, 200);
+
+                }
+            }
+            return player;
+        }
         public static void clean () {
             cleanAttachablePlayerList ();
             cleanMoveableTileList ();

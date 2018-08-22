@@ -8,7 +8,7 @@ public class Player : MonoBehaviour {
     public int z { get; set; }
     public bool canBeAttacked = false;
     public bool isAI = false;
-    public int teamID;
+    public Team team;
     public PlayerState state = PlayerState.Finish;
     void Awake () {
         x = int.Parse (transform.position.x.ToString ());
@@ -17,16 +17,17 @@ public class Player : MonoBehaviour {
 
     public void init () {
         GetComponent<Renderer> ().material.color = getTeamColor ();
+        DialTheCloud();
+        team.playerList.Add(this);
     }
     Color getTeamColor () {
         Color color = Color.white;
-        if (teamID == 1) {
+        if (team.id == 1) {
             color = Color.red;
         }
         return color;
     }
     void DialTheCloud () {
-        Team team = Static.teamDic[teamID];
         for (int i = -1; i <= 1; i++) {
             for (int j = -1; j <= 1; j++) {
                 if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
@@ -46,6 +47,7 @@ public class Player : MonoBehaviour {
             autoRun ();
         }
         if (state == PlayerState.AfterMove) {
+            DialTheCloud();
             Static.clean ();
             showAttackable ();
 
@@ -86,8 +88,8 @@ public class Player : MonoBehaviour {
                     }
 
                     if (Mathf.Abs (i) == circle || Mathf.Abs (j) == circle) {
-                        Player player = findPlayer (x + i, z + j);
-                        if (player != null && player.teamID != teamID) {
+                        Player player = Static.findPlayer (x + i, z + j);
+                        if (player != null && player.team != team) {
                             showAttackable ();
                             showMoveable ();
                             if (player.canBeAttacked) {
@@ -146,8 +148,8 @@ public class Player : MonoBehaviour {
                     continue;
                 }
 
-                Player player = findPlayer (x + i, z + j);
-                if (player != null && player.teamID != Static.currentTeamID) {
+                Player player = Static.findPlayer (x + i, z + j);
+                if (player != null && player.team != Static.currentTeam) {
                     player.enableAttack ();
                     Static.attackablePlayerList.Add (player);
                 }
@@ -155,21 +157,7 @@ public class Player : MonoBehaviour {
         }
     }
 
-    Player findPlayer (int i, int j) {
-        Player player = null;
-        RaycastHit hit;
-        Vector3 pos = Camera.main.WorldToScreenPoint (new Vector3 (i, 0, j));
-        Ray ray = Camera.main.ScreenPointToRay (pos);
-
-        if (Physics.Raycast (ray, out hit)) {
-            player = hit.collider.GetComponent<Player> ();
-            if (player != null) {
-                Debug.DrawLine (ray.origin, hit.point, Color.red, 200);
-
-            }
-        }
-        return player;
-    }
+    
     void showMoveable () {
         Tile[, ] tiles = Static.tiles;
         for (int i = -1; i <= 1; i++) {

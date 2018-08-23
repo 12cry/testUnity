@@ -58,7 +58,7 @@ public class BuildInfoUI : Singleton<BuildInfoUI> {
         int i = 1;
         foreach (BuildableType type in buildableTypelist) {
             BuildableButtonUI bbui = buildableButtonUIDictionary[type];
-            bbui.transform.localPosition = new Vector3 (i * 100 - 200, 0, 0);
+            bbui.transform.localPosition = new Vector3 (i * 100 - Screen.width/2, -Screen.height/2+50, 0);
             i++;
 
         }

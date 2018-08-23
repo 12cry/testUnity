@@ -5,6 +5,8 @@ namespace testUnity {
     public class GameAI : MonoBehaviour {
         Queue<Player> queue = new Queue<Player> ();
         AIState state = AIState.Finish;
+        Player currentPlayer;
+        bool strong = true;
 
         void Start () { }
         void Update () {
@@ -14,26 +16,21 @@ namespace testUnity {
             }
 
             if (state == AIState.Ready) {
-                state = AIState.Building;
                 build ();
                 state = AIState.Builded;
             }
 
             if (state == AIState.Builded) {
-                GameObject[] gos = GameObject.FindGameObjectsWithTag ("team1");
-                foreach (GameObject go in gos) {
-                    Player player = go.GetComponent<Player> ();
-                    queue.Enqueue (player);
-                }
                 state = AIState.Playing;
             }
 
             if (state == AIState.Playing) {
-                if (Static.currentPlayerState == PlayerState.Finish) {
+                if (currentPlayer == null || currentPlayer.state == PlayerState.Finish) {
                     if (queue.Count > 0) {
-                        Player player = queue.Dequeue ();
-                        Static.currentPlayerState = PlayerState.Playing;
-                        player.state = PlayerState.Ready;
+                        currentPlayer = queue.Dequeue ();
+                        currentPlayer.state = PlayerState.Ready;
+                    } else if (!strong && enoughMoneyToBuild ()) {
+                        state = AIState.Ready;
                     } else {
                         state = AIState.Played;
                     }
@@ -42,11 +39,27 @@ namespace testUnity {
 
             if (state == AIState.Played) {
                 Static.currentGameState = GameState.HumanRuning;
-                ResourceUI.instance.moneyValueText.text = "2";
                 Static.currentTeam = Static.teamDic[0];
+                reward ();
                 state = AIState.Finish;
             }
 
+        }
+
+        public void reward () {
+            Team team = Static.currentTeam;
+            int money = team.money;
+            foreach (City city in team.cityList) {
+                money += 1;
+                foreach (Tile tile in city.tileList) {
+                    if (tile.buildableType == BuildableType.Farm) {
+                        money += 2;
+                    }
+                }
+            }
+            if (!team.isAI) {
+                ResourceUI.instance.moneyValueText.text = money.ToString ();
+            }
         }
 
         public void build () {
@@ -54,7 +67,10 @@ namespace testUnity {
             int money = team.money;
             int cityMoney = Static.buildMoneyDic[BuildableType.City];
             int warriorMoney = Static.buildMoneyDic[BuildableType.Warrior];
-            // enemy/resource
+            int farmMoney = Static.buildMoneyDic[BuildableType.Farm];
+            if (!enoughMoneyToBuild ()) {
+                return;
+            }
             foreach (City city in team.cityList) {
                 int x = city.x;
                 int z = city.z;
@@ -62,12 +78,12 @@ namespace testUnity {
                 int meStrength = 0;
                 int enemyStrength = 0;
 
-                if (money < warriorMoney) {
+                if (money < warriorMoney || Static.findPlayer (x, z) == null) {
                     break;
                 }
                 for (int i = -r; i <= r; i++) {
                     for (int j = -r; j <= r; j++) {
-                        if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ || (i == 0 & j == 0)) {
+                        if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ) {
                             continue;
                         }
                         Player player = Static.findPlayer (x + i, z + j);
@@ -81,24 +97,44 @@ namespace testUnity {
                     }
                 }
                 if (meStrength < enemyStrength) {
-
+                    Static.build (BuildableType.Warrior, x, z);
+                    Static.currentSelectedPlayer.isAI = true;
+                    strong = false;
                 }
+            }
 
-                if (city.getPlayerInCity () == null) {
-                    Static.currentSelectedTile = Static.tiles[city.x, city.z];
-                    Static.buildableDic[BuildableType.Warrior].build ();
+            if (!strong) {
+                return;
+            }
+
+            foreach (City city in team.cityList) {
+                if (money < farmMoney) {
+                    break;
+                }
+                foreach (Tile tile in city.tileList) {
+                    if (money < farmMoney) {
+                        break;
+                    }
+                    if (tile.buildableType == BuildableType.Flat) {
+                        Static.build (BuildableType.Farm, tile);
+                    }
                 }
             }
             if (money > cityMoney) {
                 Tile tile = getTheBestCityTile ();
                 if (tile != null) {
-                    Static.currentSelectedTile = tile;
-                    Static.buildableDic[BuildableType.City].build ();
+                    Static.build (BuildableType.City, tile);
                 }
             }
 
         }
 
+        bool enoughMoneyToBuild () {
+            if (Static.currentTeam.money < 1) {
+                return false;
+            }
+            return true;
+        }
         Tile getTheBestCityTile () {
 
             return null;
@@ -106,6 +142,11 @@ namespace testUnity {
         public void run () {
             Static.currentGameState = GameState.AIRuning;
             Static.currentTeam = Static.teamDic[1];
+            reward ();
+            List<Player> playerList = Static.currentTeam.playerList;
+            foreach (Player player in playerList) {
+                queue.Enqueue (player);
+            }
             state = AIState.Ready;
         }
     }

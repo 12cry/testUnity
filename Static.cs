@@ -13,11 +13,17 @@ namespace testUnity {
         public static Tile currentSelectedTile { get; set; }
         public static Player currentSelectedPlayer { get; set; }
         public static GameState currentGameState = GameState.HumanRuning;
-        public static PlayerState currentPlayerState = PlayerState.Finish;
-        public static Team currentTeam = Static.teamDic[0];
+        public static Team currentTeam;
         public static int cityID = 0;
         public static Tile[, ] tiles;
 
+        public static void build (BuildableType buildableType, int x, int z) {
+            build(buildableType,Static.tiles[x, z]);
+        }
+        public static void build (BuildableType buildableType, Tile tile) {
+            Static.currentSelectedTile = tile;
+            Static.buildableDic[buildableType].build ();
+        }
         public static Player findPlayer (int i, int j) {
             Player player = null;
             RaycastHit hit;

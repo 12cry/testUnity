@@ -19,6 +19,7 @@ public class Player : MonoBehaviour {
         GetComponent<Renderer> ().material.color = getTeamColor ();
         DialTheCloud();
         team.playerList.Add(this);
+        Static.currentSelectedPlayer = this;
     }
     Color getTeamColor () {
         Color color = Color.white;
@@ -57,7 +58,7 @@ public class Player : MonoBehaviour {
                     attack (Static.attackablePlayerList[0]);
                 }
                 Static.clean ();
-                Static.currentPlayerState = PlayerState.Finish;
+                // Static.currentPlayerState = PlayerState.Finish;
             }
             state = PlayerState.Finish;
         }

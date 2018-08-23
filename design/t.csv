@@ -1,6 +1,6 @@
-code,name
+code,name,request
 100,flat
 101,mountain
-200,city
-201,farm
-300,warrior
+200,city,flat
+201,farm,flat
+300,warrior,city

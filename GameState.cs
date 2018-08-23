@@ -12,7 +12,6 @@ namespace testUnity
     public enum AIState
     {
         Ready,
-        Building,
         Builded,
         Playing,
         Played,

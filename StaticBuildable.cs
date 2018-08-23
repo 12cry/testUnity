@@ -31,6 +31,7 @@ public class StaticBuildable : Buildable {
                     Tile tile = tiles[x + i, z + j];
                     if (tile.city == null) {
                         tile.city = city;
+                        city.tileList.Add(tile);
                     }
                 }
             }

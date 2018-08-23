@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace testUnity {
     public class City {
         public int x { get; set; }
@@ -5,6 +7,7 @@ namespace testUnity {
         public int id { get; set; }
         public string name { get; set; }
         public Team team { get; set; }
+        public List<Tile> tileList = new List<Tile>();
 
         public void init () {
             DialTheCloud ();
@@ -21,13 +24,5 @@ namespace testUnity {
             }
         }
 
-        public Player getPlayerInCity () {
-            foreach (Player player in team.playerList) {
-                if (player.x == x && player.z == z) {
-                    return player;
-                }
-            }
-            return null;
-        }
     }
 }

@@ -1,25 +1,32 @@
+using Cry.Common;
 using UnityEngine;
 
 namespace testUnity {
-    public class CameraRig : MonoBehaviour {
-        Camera cacheCamera;
+    public class CameraRig : Singleton<CameraRig> {
+        public Camera cacheCamera;
         public float screenEdgeThreshold;
-        public float panSpeed=4;
+        public float panSpeed = 4;
         public float minCameraX = 0;
         public float maxCameraX = 12;
         public float minCameraZ = 0;
         public float maxCameraZ = 5;
-        void Awake () {
+
+        protected override void Awake () {
+            base.Awake ();
             cacheCamera = GetComponent<Camera> ();
-            // Debug.Log (cacheCamera.pixelWidth);
-            // Debug.Log (Screen.width);
+            Debug.Log (cacheCamera.pixelWidth);
+            Debug.Log (Screen.width);
+        }
+
+        public void init (int maxX, int maxZ) {
+            cacheCamera.transform.position = new Vector3 (maxX / 2, cacheCamera.transform.position.y, maxZ / 2);
         }
 
         void Update () {
             // move();
         }
 
-        void move(){
+        void move () {
             Vector3 cameraPosition = cacheCamera.transform.position;
             Vector3 mousePosition = Input.mousePosition;
             Vector3 offset = Vector3.zero;

@@ -17,14 +17,15 @@ public class BuildableButtonUI : MonoBehaviour {
 
         buildable.build ();
 
-        reduceMoney();
+        reduceMoney ();
     }
-   
+
     public void reduceMoney () {
         Team team = Static.currentTeam;
         team.money -= buildable.money;
-        ResourceUI.instance.moneyValueText.text = team.money.ToString ();
+        if (!team.isAI) {
+            ResourceUI.instance.moneyValueText.text = team.money.ToString ();
+        }
     }
-
 
 }

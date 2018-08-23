@@ -12,6 +12,9 @@ public class ResourceUI : Singleton<ResourceUI> {
 	protected override void Awake()
 	{
 		base.Awake();
-		moneyValueText.text = Static.teamDic[0].ToString();
+	}
+
+	public void init(){
+		moneyValueText.text = Static.teamDic[0].money.ToString();
 	}
 }

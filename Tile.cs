@@ -28,6 +28,9 @@ public class Tile : MonoBehaviour {
 
     public void enableMove () {
         //todo
+        Shader s = Shader.Find("Custom/mb1");
+        print(s);
+        GetComponent<MeshRenderer>().material.shader = s;
         canMove = true;
     }
     public void disableMove () {

@@ -7,9 +7,8 @@ public class Player : MonoBehaviour {
     public int x { get; set; }
     public int z { get; set; }
     public bool canBeAttacked = false;
-    public bool isAI = false;
     public Team team;
-    public PlayerState state = PlayerState.Finish;
+    public PlayerState state = PlayerState.Ready;
     void Awake () {
         x = int.Parse (transform.position.x.ToString ());
         z = int.Parse (transform.position.z.ToString ());
@@ -17,9 +16,9 @@ public class Player : MonoBehaviour {
 
     public void init () {
         GetComponent<Renderer> ().material.color = getTeamColor ();
-        DialTheCloud();
-        team.playerList.Add(this);
-        Static.currentSelectedPlayer = this;
+        DialTheCloud ();
+        team.playerList.Add (this);
+        // Static.currentSelectedPlayer = this;
     }
     Color getTeamColor () {
         Color color = Color.white;
@@ -48,19 +47,18 @@ public class Player : MonoBehaviour {
             autoRun ();
         }
         if (state == PlayerState.AfterMove) {
-            DialTheCloud();
+            DialTheCloud ();
             Static.clean ();
             showAttackable ();
 
-            if (isAI) {
+            if (team.isAI) {
                 if (Static.attackablePlayerList.Count > 0) {
                     state = PlayerState.Attacking;
                     attack (Static.attackablePlayerList[0]);
+                    state = PlayerState.Finish;
                 }
                 Static.clean ();
-                // Static.currentPlayerState = PlayerState.Finish;
             }
-            state = PlayerState.Finish;
         }
     }
     private void OnMouseDown () {
@@ -68,17 +66,23 @@ public class Player : MonoBehaviour {
         if (canBeAttacked) {
             attack (this);
             Static.clean ();
+            Static.currentSelectedPlayer.state = PlayerState.Finish;
             return;
         }
-        if (isAI) {
+        if (team.isAI) {
             return;
         }
         if (Static.currentSelectedPlayer == this) {
             return;
         }
         Static.currentSelectedPlayer = this;
-        showAttackable ();
-        showMoveable ();
+
+        if (state == PlayerState.Playing) {
+            showMoveable ();
+            showAttackable ();
+        } else if (state == PlayerState.AfterMove) {
+            showAttackable ();
+        }
     }
     public void autoRun () {
         for (int circle = 1; circle < Mathf.Max (Land.instance.maxX, Land.instance.maxZ); circle++) {
@@ -158,7 +162,6 @@ public class Player : MonoBehaviour {
         }
     }
 
-    
     void showMoveable () {
         Tile[, ] tiles = Static.tiles;
         for (int i = -1; i <= 1; i++) {

@@ -98,7 +98,6 @@ namespace testUnity {
                 }
                 if (meStrength < enemyStrength) {
                     Static.build (BuildableType.Warrior, x, z);
-                    Static.currentSelectedPlayer.isAI = true;
                     strong = false;
                 }
             }

@@ -10,7 +10,6 @@ public class BuildableLibrary : ScriptableObject {
     public List<Buildable> buildableList;
 
     public void OnAfterDeserialize () {
-        Debug.Log("OnAfterDeserialize------");
         if (buildableList == null) {
             return;
         }

@@ -1,6 +1,6 @@
 using System.Collections.Generic;
 
-namespace testUnity {
+namespace testUnity.model {
     public class Team {
         public int id { get; set; }
         public bool isAI { get; set; }

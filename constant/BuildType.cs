@@ -1,6 +1,6 @@
-namespace testUnity
+namespace testUnity.constant
 {
-    public enum BuildableType
+    public enum BuildType
     {
         Flat,
         Mountain,

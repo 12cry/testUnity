@@ -1,21 +1,17 @@
 using System.Collections;
 using System.Collections.Generic;
 using testUnity;
+using testUnity.ctrl;
+using testUnity.model;
 using UnityEngine;
 
 namespace testUnity {
     public class Static {
         public static List<Tile> moveableTileList = new List<Tile> ();
         public static List<Player> attackablePlayerList = new List<Player> ();
-        public static Dictionary<int, Team> teamDic = new Dictionary<int, Team> ();
-        public static Dictionary<BuildableType, int> buildMoneyDic;
-        public static Dictionary<BuildableType, Buildable> buildableDic;
-        public static Tile currentSelectedTile { get; set; }
         public static Player currentSelectedPlayer { get; set; }
         public static GameState currentGameState = GameState.HumanRuning;
-        public static Team currentTeam;
         public static int cityID = 0;
-        public static Tile[, ] tiles;
 
         public static void build (BuildableType buildableType, int x, int z) {
             build(buildableType,Static.tiles[x, z]);
@@ -31,8 +27,9 @@ namespace testUnity {
             Ray ray = Camera.main.ScreenPointToRay (pos);
 
             if (Physics.Raycast (ray, out hit)) {
-                player = hit.collider.GetComponent<Player> ();
-                if (player != null) {
+                PlayerCtrl playerCtrl = hit.collider.GetComponent<PlayerCtrl> ();
+                if (playerCtrl != null) {
+                    player = playerCtrl.player;
                     Debug.DrawLine (ray.origin, hit.point, Color.red, 200);
 
                 }

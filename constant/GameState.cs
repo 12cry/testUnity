@@ -1,4 +1,4 @@
-namespace testUnity
+namespace testUnity.constant
 {
     
     public enum GameState

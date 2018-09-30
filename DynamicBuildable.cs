@@ -1,16 +1,17 @@
 
 using testUnity;
+using testUnity.ctrl;
 using UnityEngine;
 
 public class DynamicBuildable : Buildable
 {
 
-    public Player player;
+    public PlayerCtrl playerCtrl;
 
     public override void build()
     {
         Tile tile = Static.currentSelectedTile;
-        Player player = Instantiate(this.player);
+        PlayerCtrl playerCtrl = Instantiate(this.playerCtrl);
         Transform t = player.GetComponent<Transform>();
         t.localPosition = new Vector3(tile.x,0,tile.z);
         player.team = Static.currentTeam;

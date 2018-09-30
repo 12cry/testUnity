@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using testUnity.constant;
+using testUnity.ctrl;
+using UnityEngine;
 
 namespace testUnity.model {
 
@@ -6,7 +8,7 @@ namespace testUnity.model {
         public int column;
         public int row;
         public Tile[, ] tiles;
-        
+
         public Land (int column, int row) {
             this.column = column;
             this.row = row;
@@ -16,14 +18,17 @@ namespace testUnity.model {
             tiles = new Tile[column, row];
             for (int i = 0; i < column; i++) {
                 for (int j = 0; j < row; j++) {
-                    Vector3 v = new Vector3 (i, 0, j);
-                    Tile newTile = Object.Instantiate (GameConfigure.instance.tile);
-                    newTile.x = i;
-                    newTile.z = j;
-                    newTile.transform.parent = transform;
-                    newTile.transform.localPosition = v;
-                    newTile.buildableType = BuildableType.Flat;
-                    tiles[i, j] = newTile;
+                    TileCtrl tileCtrl = Object.Instantiate (GameConfigure.instance.tileCtrlPrefab);
+                    tileCtrl.transform.parent = transform;
+                    tileCtrl.transform.localPosition = new Vector3 (i, 0, j);
+
+                    Tile tile = new Tile ();
+                    tile.x = i;
+                    tile.z = j;
+                    tile.buildType = BuildType.Flat;
+
+                    tileCtrl.tile = tile;
+                    tiles[i, j] = tile;
                 }
             }
         }

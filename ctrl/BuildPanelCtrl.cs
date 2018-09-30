@@ -1,15 +1,17 @@
+using Cry.Common;
 using testUnity.common;
 using testUnity.model;
 using UnityEngine;
 
 namespace testUnity.ctrl {
-    public class BuildPanelCtrl  : MonoBehaviour{
-        BuildPanel buildPanel = new BuildPanel();
+    public class BuildPanelCtrl : Singleton<BuildPanelCtrl> {
+        BuildPanel buildPanel = new BuildPanel ();
         void Start () {
-            buildPanel.init(transform);
+            buildPanel.init (transform);
         }
-        
+
         public void show () {
+            buildPanel.showBuildButton ();
             GetComponent<Canvas> ().enabled = true;
         }
         public void hide () {

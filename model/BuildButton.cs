@@ -1,4 +1,5 @@
 using testUnity.common;
+using testUnity.ctrl;
 using UnityEngine.UI;
 
 namespace testUnity.model {
@@ -12,7 +13,7 @@ namespace testUnity.model {
             Team team = StaticVar.currentTeam;
             team.money -= builder.money;
             if (!team.isAI) {
-                ResourceUI.instance.moneyValueText.text = team.money.ToString ();
+                ResourceCtrl.instance.moneyValueText.text = team.money.ToString ();
             }
         }
     }

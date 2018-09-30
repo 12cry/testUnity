@@ -18,7 +18,7 @@ namespace testUnity.model {
             gameObject.GetComponent<Renderer> ().material.color = getTeamColor ();
             Tool.DialTheCloud (x, z, team);
             team.playerList.Add (this);
-            // Static.currentSelectedPlayer = this;
+            // StaticVar.currentSelectedPlayer = this;
         }
         public void autoRun () {
             Land land = ModelRepository.instance.Land;
@@ -30,13 +30,13 @@ namespace testUnity.model {
                         }
 
                         if (Mathf.Abs (i) == circle || Mathf.Abs (j) == circle) {
-                            Player targetPlayer = Static.findPlayer (x + i, z + j);
+                            Player targetPlayer = Tool.findPlayer (x + i, z + j);
                             if (targetPlayer != null && targetPlayer.team != team) {
                                 showAttackable ();
                                 showMoveable ();
                                 if (targetPlayer.canBeAttacked) {
                                     attack (targetPlayer);
-                                    Static.clean ();
+                                    Tool.clean ();
                                 } else {
                                     Tile tile = getShortestDistanceTile (targetPlayer);
                                     move (tile);
@@ -62,14 +62,14 @@ namespace testUnity.model {
             state = PlayerState.AfterMove;
         }
         Tile getRandomTile () {
-            return Static.moveableTileList[0];
+            return StaticVar.moveableTileList[0];
         }
         
         Tile getShortestDistanceTile (Player player) {
             float distance = Mathf.Infinity;
             Tile result = null;
-            foreach (Tile tile in Static.moveableTileList) {
-                float distance2 = (tile.transform.position - gameObject.transform.position).sqrMagnitude;
+            foreach (Tile tile in StaticVar.moveableTileList) {
+                float distance2 = (tile.gameObject.transform.position - gameObject.transform.position).sqrMagnitude;
                 if (distance2 < distance) {
                     result = tile;
                     distance = distance2;
@@ -86,7 +86,7 @@ namespace testUnity.model {
             canBeAttacked = false;
         }
         public void enableAttack () {
-            gameObject.GetComponent<MeshRenderer> ().sharedMaterial = Static.getMbMaterial ();
+            gameObject.GetComponent<MeshRenderer> ().sharedMaterial = Tool.getMbMaterial ();
             canBeAttacked = true;
         }
 
@@ -98,10 +98,10 @@ namespace testUnity.model {
                     if (x + i < 0 || x + i >= land.column || z + j < 0 || z + j >= land.row || (i == 0 & j == 0)) {
                         continue;
                     }
-                    Player targetPlayer = Static.findPlayer (x + i, z + j);
+                    Player targetPlayer = Tool.findPlayer (x + i, z + j);
                     if (targetPlayer != null && team != StaticVar.currentTeam) {
                         enableAttack ();
-                        Static.attackablePlayerList.Add (targetPlayer);
+                        StaticVar.attackablePlayerList.Add (targetPlayer);
                     }
                 }
             }
@@ -116,7 +116,7 @@ namespace testUnity.model {
                         continue;
                     }
                     Tile tile = tiles[x + i, z + j];
-                    Static.moveableTileList.Add (tile);
+                    StaticVar.moveableTileList.Add (tile);
                     tile.enableMove ();
 
                 }

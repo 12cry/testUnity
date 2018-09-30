@@ -1,51 +1,32 @@
-﻿using testUnity;
+﻿
 using testUnity.constant;
+using testUnity.model.builder;
 using UnityEngine;
-using UnityEngine.EventSystems;
+
 namespace testUnity.model {
 
-    public class Tile : MonoBehaviour {
-        public int x { get; set; }
-        public int z { get; set; }
+    public class Tile {
+        public int x;
+        public int z;
         public bool canMove = false;
         public BuildType buildType;
         public City city;
+        public GameObject gameObject;
 
-        private void Awake () {
-
-        }
-        private void OnMouseDown () {
-            Static.currentSelectedTile = this;
-            if (canMove) {
-                Player player = Static.currentSelectedPlayer;
-                player.move (this);
-                BuildInfoUI.instance.hide ();
-            } else {
-                BuildInfoUI.instance.show ();
-            }
-
-            Static.clean ();
-            Static.currentSelectedPlayer = null;
-        }
-
+        
         public void enableMove () {
-            //todo
             Shader s = Shader.Find ("Custom/mb1");
-            print (s);
-            GetComponent<MeshRenderer> ().material.shader = s;
+            gameObject.GetComponent<MeshRenderer> ().material.shader = s;
             canMove = true;
         }
         public void disableMove () {
-            //todo
             canMove = false;
         }
 
-        public void setTileType (StaticBuildable buildable) {
-            Material m = buildable.tileMaterial;
-            this.GetComponent<MeshRenderer> ().sharedMaterial = m;
-            this.buildableType = buildable.type;
-
+        public void setTileType (BuildType buildType) {
+            Material m = null;//
+            gameObject.GetComponent<MeshRenderer> ().sharedMaterial = m;
+            this.buildType = buildType;
         }
-
     }
 }

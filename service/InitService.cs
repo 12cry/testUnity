@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using testUnity.common;
+using testUnity.constant;
 using testUnity.model;
 using UnityEngine;
 
@@ -30,16 +31,16 @@ namespace testUnity.service {
             team.visualTile = new bool[land.column, land.row];
             StaticVar.teamDic[1] = team;
 
-            Dictionary<BuildableType, Buildable> buildableDictionary = StaticVar.buildableDic;
+            Dictionary<BuildType, Builder> builderDic = StaticVar.builderDic;
             StaticVar.currentTeam = StaticVar.teamDic[0];
             StaticVar.currentSelectedTile = getInitBuildCityTile ();
-            buildableDictionary[BuildableType.City].build ();
-            buildableDictionary[BuildableType.Warrior].build ();
+            builderDic[BuildType.City].build ();
+            builderDic[BuildType.Warrior].build ();
 
             StaticVar.currentTeam = StaticVar.teamDic[1];
             StaticVar.currentSelectedTile = getInitBuildCityTile ();
-            buildableDictionary[BuildableType.City].build ();
-            buildableDictionary[BuildableType.Warrior].build ();
+            builderDic[BuildType.City].build ();
+            builderDic[BuildType.Warrior].build ();
 
             StaticVar.currentTeam = StaticVar.teamDic[0];
         }

@@ -7,12 +7,14 @@ using testUnity.model;
 using UnityEngine;
 
 public class GameConfigure : Singleton<GameConfigure> {
-    public Tile tile;
     public int landColumn;
     public int landRow;
 
     public BuildLibrary buildLibrary;
+    
     public BuildButtonCtrl buildButtonCtrlPrefab;
+    public PlayerCtrl playerCtrlPrefab;
+    public TileCtrl tileCtrlPrefab;
 
     protected override void Awake () {
         base.Awake ();

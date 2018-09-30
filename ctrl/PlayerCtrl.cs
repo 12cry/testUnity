@@ -11,7 +11,6 @@ namespace testUnity.ctrl {
     public class PlayerCtrl : MonoBehaviour {
         public Player player;
         void Awake () {
-            player = new Player ();
             player.x = int.Parse (transform.position.x.ToString ());
             player.z = int.Parse (transform.position.z.ToString ());
         }
@@ -26,34 +25,34 @@ namespace testUnity.ctrl {
             }
             if (player.state == PlayerState.AfterMove) {
                 Tool.DialTheCloud (player.x, player.z, player.team);
-                Static.clean ();
+                Tool.clean ();
                 player.showAttackable ();
 
                 if (player.team.isAI) {
-                    if (Static.attackablePlayerList.Count > 0) {
+                    if (StaticVar.attackablePlayerList.Count > 0) {
                         player.state = PlayerState.Attacking;
-                        player.attack (Static.attackablePlayerList[0]);
+                        player.attack (StaticVar.attackablePlayerList[0]);
                         player.state = PlayerState.Finish;
                     }
-                    Static.clean ();
+                    Tool.clean ();
                 }
             }
         }
         void OnMouseDown () {
 
             if (player.canBeAttacked) {
-                Static.currentSelectedPlayer.attack (player);
-                Static.clean ();
-                Static.currentSelectedPlayer.state = PlayerState.Finish;
+                StaticVar.currentSelectedPlayer.attack (player);
+                Tool.clean ();
+                StaticVar.currentSelectedPlayer.state = PlayerState.Finish;
                 return;
             }
             if (player.team.isAI) {
                 return;
             }
-            if (Static.currentSelectedPlayer == player) {
+            if (StaticVar.currentSelectedPlayer == player) {
                 return;
             }
-            Static.currentSelectedPlayer = player;
+            StaticVar.currentSelectedPlayer = player;
 
             if (player.state == PlayerState.Playing) {
                 player.showMoveable ();

@@ -19,14 +19,14 @@ namespace testUnity.model {
                 buildButtonCtrl.transform.localPosition = new Vector3 (1000, 0, 0);
                 
                 BuildButton buildButton = new BuildButton ();
-                buildButton.name = builder.type.ToString ();
+                buildButton.name = builder.buildType.ToString ();
                 buildButton.builder = builder;
                 buildButton.text.text = builder.buildName;
                 buildButtonCtrl.buildButton = buildButton;
 
                 buildButtonCtrlList.Add (buildButtonCtrl);
             }
-            buildButtonCtrlDic = buildButtonCtrlList.ToDictionary (t => t.buildButton.builder.type);
+            buildButtonCtrlDic = buildButtonCtrlList.ToDictionary (t => t.buildButton.builder.buildType);
         }
 
         public void showBuildButton(){

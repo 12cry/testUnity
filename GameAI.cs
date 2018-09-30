@@ -58,7 +58,7 @@ namespace testUnity {
                 }
             }
             if (!team.isAI) {
-                ResourceUI.instance.moneyValueText.text = money.ToString ();
+                ResourceCtrl.instance.moneyValueText.text = money.ToString ();
             }
         }
 

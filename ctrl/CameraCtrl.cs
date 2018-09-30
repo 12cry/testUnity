@@ -1,8 +1,8 @@
 using Cry.Common;
 using UnityEngine;
 
-namespace testUnity {
-    public class CameraRig : Singleton<CameraRig> {
+namespace testUnity.ctrl {
+    public class CameraCtrl : Singleton<CameraCtrl> {
         public Camera cacheCamera;
         public float screenEdgeThreshold;
         public float panSpeed = 4;

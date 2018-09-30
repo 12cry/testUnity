@@ -3,7 +3,7 @@ using testUnity.constant;
 namespace testUnity.model {
     public abstract class Builder {
 
-        public BuildType type;
+        public BuildType buildType;
         public string buildName;
         public int money;
 

@@ -7,7 +7,7 @@ using UnityEngine;
 namespace testUnity.common {
     public class Tool {
         public static void DialTheCloud (int x, int z, Team team) {
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
                     if (x + i < 0 || x + i >= land.column || z + j < 0 || z + j >= land.row || (i == 0 & j == 0)) {
@@ -80,12 +80,12 @@ namespace testUnity.common {
         
 
 
-        public static void build (BuildableType buildableType, int x, int z) {
-            build(buildableType,Static.tiles[x, z]);
+        public static void build (BuildType buildType, int x, int z) {
+            build(buildType,ModelRepository.instance.land.tiles[x, z]);
         }
-        public static void build (BuildableType buildableType, Tile tile) {
-            Static.currentSelectedTile = tile;
-            Static.buildableDic[buildableType].build ();
+        public static void build (BuildType buildType, Tile tile) {
+            StaticVar.currentSelectedTile = tile;
+            StaticVar.builderDic[buildType].build ();
         }
     }
 }

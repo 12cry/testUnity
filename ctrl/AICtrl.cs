@@ -1,8 +1,11 @@
 using System.Collections.Generic;
+using testUnity.common;
+using testUnity.constant;
+using testUnity.model;
 using UnityEngine;
 
-namespace testUnity {
-    public class GameAI : MonoBehaviour {
+namespace testUnity.ctrl {
+    public class AICtrl : MonoBehaviour {
         Queue<Player> queue = new Queue<Player> ();
         AIState state = AIState.Finish;
         Player currentPlayer;
@@ -38,8 +41,8 @@ namespace testUnity {
             }
 
             if (state == AIState.Played) {
-                Static.currentGameState = GameState.HumanRuning;
-                Static.currentTeam = Static.teamDic[0];
+                StaticVar.currentGameState = GameState.HumanRuning;
+                StaticVar.currentTeam = StaticVar.teamDic[0];
                 reward ();
                 state = AIState.Finish;
             }
@@ -47,12 +50,12 @@ namespace testUnity {
         }
 
         public void reward () {
-            Team team = Static.currentTeam;
+            Team team = StaticVar.currentTeam;
             int money = team.money;
             foreach (City city in team.cityList) {
                 money += 1;
                 foreach (Tile tile in city.tileList) {
-                    if (tile.buildableType == BuildableType.Farm) {
+                    if (tile.buildType == BuildType.Farm) {
                         money += 2;
                     }
                 }
@@ -63,11 +66,12 @@ namespace testUnity {
         }
 
         public void build () {
-            Team team = Static.currentTeam;
+            Team team = StaticVar.currentTeam;
+            Land land = ModelRepository.instance.land;
             int money = team.money;
-            int cityMoney = Static.buildMoneyDic[BuildableType.City];
-            int warriorMoney = Static.buildMoneyDic[BuildableType.Warrior];
-            int farmMoney = Static.buildMoneyDic[BuildableType.Farm];
+            int cityMoney = StaticVar.buildMoneyDic[BuildType.City];
+            int warriorMoney = StaticVar.buildMoneyDic[BuildType.Warrior];
+            int farmMoney = StaticVar.buildMoneyDic[BuildType.Farm];
             if (!enoughMoneyToBuild ()) {
                 return;
             }
@@ -78,17 +82,17 @@ namespace testUnity {
                 int meStrength = 0;
                 int enemyStrength = 0;
 
-                if (money < warriorMoney || Static.findPlayer (x, z) == null) {
+                if (money < warriorMoney || Tool.findPlayer (x, z) == null) {
                     break;
                 }
                 for (int i = -r; i <= r; i++) {
                     for (int j = -r; j <= r; j++) {
-                        if (x + i < 0 || x + i >= Land.instance.maxX || z + j < 0 || z + j >= Land.instance.maxZ) {
+                        if (x + i < 0 || x + i >= land.column || z + j < 0 || z + j >= land.row) {
                             continue;
                         }
-                        Player player = Static.findPlayer (x + i, z + j);
+                        Player player = Tool.findPlayer (x + i, z + j);
                         if (player != null) {
-                            if (player.team == Static.currentTeam) {
+                            if (player.team == StaticVar.currentTeam) {
                                 meStrength += 1;
                             } else {
                                 enemyStrength += 1;
@@ -97,7 +101,7 @@ namespace testUnity {
                     }
                 }
                 if (meStrength < enemyStrength) {
-                    Static.build (BuildableType.Warrior, x, z);
+                    Tool.build (BuildType.Warrior, x, z);
                     strong = false;
                 }
             }
@@ -114,22 +118,22 @@ namespace testUnity {
                     if (money < farmMoney) {
                         break;
                     }
-                    if (tile.buildableType == BuildableType.Flat) {
-                        Static.build (BuildableType.Farm, tile);
+                    if (tile.buildType == BuildType.Flat) {
+                        Tool.build (BuildType.Farm, tile);
                     }
                 }
             }
             if (money > cityMoney) {
                 Tile tile = getTheBestCityTile ();
                 if (tile != null) {
-                    Static.build (BuildableType.City, tile);
+                    Tool.build (BuildType.City, tile);
                 }
             }
 
         }
 
         bool enoughMoneyToBuild () {
-            if (Static.currentTeam.money < 1) {
+            if (StaticVar.currentTeam.money < 1) {
                 return false;
             }
             return true;
@@ -139,15 +143,14 @@ namespace testUnity {
             return null;
         }
         public void run () {
-            Static.currentGameState = GameState.AIRuning;
-            Static.currentTeam = Static.teamDic[1];
+            StaticVar.currentGameState = GameState.AIRuning;
+            StaticVar.currentTeam = StaticVar.teamDic[1];
             reward ();
-            List<Player> playerList = Static.currentTeam.playerList;
+            List<Player> playerList = StaticVar.currentTeam.playerList;
             foreach (Player player in playerList) {
                 queue.Enqueue (player);
             }
             state = AIState.Ready;
         }
     }
-
 }

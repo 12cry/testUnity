@@ -21,7 +21,7 @@ namespace testUnity.model {
             // StaticVar.currentSelectedPlayer = this;
         }
         public void autoRun () {
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
             for (int circle = 1; circle < Mathf.Max (land.column, land.row); circle++) {
                 for (int i = -circle; i < circle; i++) {
                     for (int j = -circle; j < circle; j++) {
@@ -91,7 +91,7 @@ namespace testUnity.model {
         }
 
         public void showAttackable () {
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
 
@@ -108,7 +108,7 @@ namespace testUnity.model {
         }
 
         public void showMoveable () {
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
             Tile[, ] tiles = land.tiles;
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {

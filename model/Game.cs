@@ -2,20 +2,15 @@ using System.Collections.Generic;
 using System.Linq;
 using testUnity.common;
 using testUnity.constant;
-using testUnity.model;
 using UnityEngine;
 
-namespace testUnity.service {
-    public class InitService {
-
-        public void initLand (Transform transform) {
-            Land land = new Land (GameConfigure.instance.landColumn, GameConfigure.instance.landRow);
-            land.init (transform);
-            ModelRepository.instance.Land = land;
-        }
-
+namespace testUnity.model
+{
+    public class Game
+    {
+        
         public void initTeam () {
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
 
             Team team = new Team ();
             team.id = 0;
@@ -31,7 +26,7 @@ namespace testUnity.service {
             team.visualTile = new bool[land.column, land.row];
             StaticVar.teamDic[1] = team;
 
-            Dictionary<BuildType, Builder> builderDic = StaticVar.builderDic;
+            Dictionary<BuildType, Builder> builderDic = GameConfigure.instance.buildLibrary.builderList.ToDictionary (t => t.buildType);
             StaticVar.currentTeam = StaticVar.teamDic[0];
             StaticVar.currentSelectedTile = getInitBuildCityTile ();
             builderDic[BuildType.City].build ();
@@ -46,7 +41,7 @@ namespace testUnity.service {
         }
 
         Tile getInitBuildCityTile () {
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
             int x = Random.Range (1, land.column - 1);
             int z = Random.Range (1, land.row - 1);
             Tile tile = land.tiles[x, z];

@@ -4,7 +4,6 @@ using testUnity;
 using testUnity.common;
 using testUnity.constant;
 using testUnity.model;
-using testUnity.service;
 using UnityEngine;
 
 namespace testUnity.ctrl {

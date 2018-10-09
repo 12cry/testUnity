@@ -4,18 +4,17 @@ using testUnity.model;
 using UnityEngine;
 
 namespace testUnity.ctrl {
-    public class BuildPanelCtrl : Singleton<BuildPanelCtrl> {
+    public class BuildPanelCtrl : MonoBehaviour {
         BuildPanel buildPanel = new BuildPanel ();
+
+        void Awake()
+        {
+            buildPanel.gameObject = gameObject;
+            ModelRepository.instance.buildPanel = buildPanel;
+        }
         void Start () {
-            buildPanel.init (transform);
+            buildPanel.init ();
         }
 
-        public void show () {
-            buildPanel.showBuildButton ();
-            GetComponent<Canvas> ().enabled = true;
-        }
-        public void hide () {
-            GetComponent<Canvas> ().enabled = false;
-        }
     }
 }

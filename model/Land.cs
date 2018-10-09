@@ -5,6 +5,7 @@ using UnityEngine;
 namespace testUnity.model {
 
     public class Land {
+        public GameObject gameObject;
         public int column;
         public int row;
         public Tile[, ] tiles;
@@ -14,12 +15,12 @@ namespace testUnity.model {
             this.row = row;
         }
 
-        public void init (Transform transform) {
+        public void init () {
             tiles = new Tile[column, row];
             for (int i = 0; i < column; i++) {
                 for (int j = 0; j < row; j++) {
                     TileCtrl tileCtrl = Object.Instantiate (GameConfigure.instance.tileCtrlPrefab);
-                    tileCtrl.transform.parent = transform;
+                    tileCtrl.transform.parent = gameObject.transform;
                     tileCtrl.transform.localPosition = new Vector3 (i, 0, j);
 
                     Tile tile = new Tile ();

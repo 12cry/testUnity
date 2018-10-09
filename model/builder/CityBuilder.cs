@@ -20,7 +20,7 @@ namespace testUnity.model.builder {
             city.z = z;
             city.init ();
 
-            Land land = ModelRepository.instance.Land;
+            Land land = ModelRepository.instance.land;
             for (int i = -1; i <= 1; i++) {
                 for (int j = -1; j <= 1; j++) {
 

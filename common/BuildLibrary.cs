@@ -16,7 +16,6 @@ public class BuildLibrary : ScriptableObject {
             return;
         }
 
-        StaticVar.builderDic = builderList.ToDictionary (t => t.type);
-        StaticVar.buildMoneyDic = builderList.ToDictionary (t => t.type, t => t.money);
+        StaticVar.buildMoneyDic = builderList.ToDictionary (t => t.buildType, t => t.money);
     }
 }

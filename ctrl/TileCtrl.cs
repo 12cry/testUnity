@@ -12,9 +12,9 @@ namespace testUnity.ctrl
             if (tile.canMove) {
                 Player player = StaticVar.currentSelectedPlayer;
                 player.move (tile);
-                BuildPanelCtrl.instance.hide ();
+                ModelRepository.instance.buildPanel.hide ();
             } else {
-                BuildPanelCtrl.instance.show ();
+                ModelRepository.instance.buildPanel.show ();
             }
 
             Tool.clean ();

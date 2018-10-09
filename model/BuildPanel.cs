@@ -9,13 +9,14 @@ using UnityEngine;
 
 namespace testUnity.model {
     public class BuildPanel {
+        public GameObject gameObject;
         List<BuildButtonCtrl> buildButtonCtrlList = new List<BuildButtonCtrl> ();
         Dictionary<BuildType, BuildButtonCtrl> buildButtonCtrlDic;
         List<BuildType> preBuildTypeList;
 
-        public void init (Transform transform) {
+        public void init () {
             foreach (Builder builder in GameConfigure.instance.buildLibrary.builderList) {
-                BuildButtonCtrl buildButtonCtrl = Object.Instantiate (GameConfigure.instance.buildButtonCtrlPrefab, transform);
+                BuildButtonCtrl buildButtonCtrl = Object.Instantiate (GameConfigure.instance.buildButtonCtrlPrefab, gameObject.transform);
                 buildButtonCtrl.transform.localPosition = new Vector3 (1000, 0, 0);
                 
                 BuildButton buildButton = new BuildButton ();
@@ -27,6 +28,14 @@ namespace testUnity.model {
                 buildButtonCtrlList.Add (buildButtonCtrl);
             }
             buildButtonCtrlDic = buildButtonCtrlList.ToDictionary (t => t.buildButton.builder.buildType);
+        }
+
+        public void show () {
+            showBuildButton ();
+            gameObject.GetComponent<Canvas> ().enabled = true;
+        }
+        public void hide () {
+            gameObject.GetComponent<Canvas> ().enabled = false;
         }
 
         public void showBuildButton(){
@@ -48,5 +57,7 @@ namespace testUnity.model {
                 i++;
             }
         }
+
+        
     }
 }

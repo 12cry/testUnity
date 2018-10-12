@@ -49,23 +49,23 @@ namespace testUnity.common {
             }
             return player;
         }
-        public static void clean () {
-            cleanAttachablePlayerList ();
-            cleanMoveableTileList ();
-        }
-        public static void cleanMoveableTileList () {
-            foreach (Tile tile in StaticVar.moveableTileList) {
-                tile.disableMove ();
-            }
-            StaticVar.moveableTileList.Clear ();
-        }
+        // public static void clean () {
+        //     cleanAttachablePlayerList ();
+        //     cleanMoveableTileList ();
+        // }
+        // public static void cleanMoveableTileList () {
+        //     foreach (Tile tile in StaticVar.moveableTileList) {
+        //         tile.disableMove ();
+        //     }
+        //     StaticVar.moveableTileList.Clear ();
+        // }
 
-        public static void cleanAttachablePlayerList () {
-            foreach (Player player in StaticVar.attackablePlayerList) {
-                player.disableAttack ();
-            }
-            StaticVar.attackablePlayerList.Clear ();
-        }
+        // public static void cleanAttachablePlayerList () {
+        //     foreach (Player player in StaticVar.attackablePlayerList) {
+        //         player.disableAttack ();
+        //     }
+        //     StaticVar.attackablePlayerList.Clear ();
+        // }
 
         public static Material getMbMaterial () {
 

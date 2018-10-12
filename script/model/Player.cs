@@ -7,12 +7,14 @@ using testUnity.script.model;
 using UnityEngine;
 namespace testUnity.script.model {
     public class Player {
+        public GameObject gameObject;
         public int x { get; set; }
         public int z { get; set; }
         public bool canBeAttacked = false;
         public Team team;
-        public PlayerState state = PlayerState.Ready;
-        public GameObject gameObject;
+        public PlayerState state = PlayerState.Idle;
+        public static List<Player> attackablePlayerList = new List<Player> ();
+        public static List<Tile> moveableTileList = new List<Tile> ();
 
         public void init () {
             gameObject.GetComponent<Renderer> ().material.color = getTeamColor ();
@@ -20,36 +22,48 @@ namespace testUnity.script.model {
             team.playerList.Add (this);
             // StaticVar.currentSelectedPlayer = this;
         }
+        public void clean () {
+            foreach (Player player in attackablePlayerList) {
+                player.disableAttack ();
+            }
+            attackablePlayerList.Clear ();
+            foreach (Tile tile in moveableTileList) {
+                tile.disableMove ();
+            }
+            moveableTileList.Clear ();
+        }
         public void autoRun () {
-            Land land = Game.instance.land;
-            for (int circle = 1; circle < Mathf.Max (land.column, land.row); circle++) {
-                for (int i = -circle; i < circle; i++) {
-                    for (int j = -circle; j < circle; j++) {
-                        if (x + i < 0 || x + i >= land.column || z + j < 0 || z + j >= land.row || (i == 0 & j == 0)) {
-                            continue;
-                        }
+            clean ();
+            //查找当前可攻击的
+            showAttackable ();
+            if (attackablePlayerList != null) {
+                attack (attackablePlayerList[0]);
+            } else {
+                showMoveable ();
 
-                        if (Mathf.Abs (i) == circle || Mathf.Abs (j) == circle) {
+                //查找远处可攻击的
+                //向远处可攻击移动
+                Land land = Game.instance.land;
+                for (int circle = 2; circle < Mathf.Max (land.column, land.row); circle++) {
+                    for (int i = -circle; i < circle; i++) {
+                        for (int j = -circle; j < circle; j++) {
+                            if (x + i < 0 || x + i >= land.column || z + j < 0 || z + j >= land.row || (i == 0 & j == 0)) {
+                                continue;
+                            }
+
                             Player targetPlayer = Tool.findPlayer (x + i, z + j);
                             if (targetPlayer != null && targetPlayer.team != team) {
-                                showAttackable ();
-                                showMoveable ();
-                                if (targetPlayer.canBeAttacked) {
-                                    attack (targetPlayer);
-                                    Tool.clean ();
-                                } else {
-                                    Tile tile = getShortestDistanceTile (targetPlayer);
-                                    move (tile);
-                                }
+                                Tile tile = getShortestDistanceTile (targetPlayer);
+                                move (tile);
                                 return;
-
                             }
                         }
                     }
                 }
+                move (moveableTileList[0]);
             }
-            showMoveable ();
-            move (getRandomTile ());
+            state = PlayerState.Finish;
+
         }
         public void move (Tile tile) {
             state = PlayerState.Moving;
@@ -59,16 +73,26 @@ namespace testUnity.script.model {
             this.z = tile.z;
         }
         void afterMove () {
-            state = PlayerState.AfterMove;
+            Tool.DialTheCloud (x, z, team);
+            clean ();
+            showAttackable ();
+
+            if (team.isAI) {
+                if (attackablePlayerList.Count > 0) {
+                    attack (attackablePlayerList[0]);
+                }
+                clean ();
+                state = PlayerState.Finish;
+            }else{
+                state = PlayerState.AfterMove;
+            }
+
         }
-        Tile getRandomTile () {
-            return StaticVar.moveableTileList[0];
-        }
-        
+
         Tile getShortestDistanceTile (Player player) {
             float distance = Mathf.Infinity;
             Tile result = null;
-            foreach (Tile tile in StaticVar.moveableTileList) {
+            foreach (Tile tile in moveableTileList) {
                 float distance2 = (tile.gameObject.transform.position - gameObject.transform.position).sqrMagnitude;
                 if (distance2 < distance) {
                     result = tile;
@@ -81,6 +105,9 @@ namespace testUnity.script.model {
         public void attack (Player player) {
             player.gameObject.SetActive (false);
             Object.Destroy (player.gameObject);
+            if (team.isAI) {
+                state = PlayerState.Finish;
+            }
         }
         public void disableAttack () {
             canBeAttacked = false;
@@ -99,9 +126,9 @@ namespace testUnity.script.model {
                         continue;
                     }
                     Player targetPlayer = Tool.findPlayer (x + i, z + j);
-                    if (targetPlayer != null && team != StaticVar.currentTeam) {
-                        enableAttack ();
-                        StaticVar.attackablePlayerList.Add (targetPlayer);
+                    if (targetPlayer != null && team != targetPlayer.team) {
+                        targetPlayer.enableAttack ();
+                        attackablePlayerList.Add (targetPlayer);
                     }
                 }
             }
@@ -116,13 +143,11 @@ namespace testUnity.script.model {
                         continue;
                     }
                     Tile tile = tiles[x + i, z + j];
-                    StaticVar.moveableTileList.Add (tile);
+                    moveableTileList.Add (tile);
                     tile.enableMove ();
-
                 }
             }
         }
-
 
         Color getTeamColor () {
             Color color = Color.white;
@@ -131,7 +156,6 @@ namespace testUnity.script.model {
             }
             return color;
         }
-
 
     }
 }

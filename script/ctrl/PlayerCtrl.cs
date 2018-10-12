@@ -15,33 +15,19 @@ namespace testUnity.ctrl {
         }
         void Update () {
 
-            if (player.state == PlayerState.Finish) {
+            if (player.state == PlayerState.Idle) {
                 return;
             }
-            if (player.state == PlayerState.Ready) {
-                player.state = PlayerState.Playing;
+            if (player.state == PlayerState.Running) {
                 player.autoRun ();
             }
-            if (player.state == PlayerState.AfterMove) {
-                Tool.DialTheCloud (player.x, player.z, player.team);
-                Tool.clean ();
-                player.showAttackable ();
-
-                if (player.team.isAI) {
-                    if (StaticVar.attackablePlayerList.Count > 0) {
-                        player.state = PlayerState.Attacking;
-                        player.attack (StaticVar.attackablePlayerList[0]);
-                        player.state = PlayerState.Finish;
-                    }
-                    Tool.clean ();
-                }
-            }
+            
         }
         void OnMouseDown () {
 
             if (player.canBeAttacked) {
                 StaticVar.currentSelectedPlayer.attack (player);
-                Tool.clean ();
+                player.clean ();
                 StaticVar.currentSelectedPlayer.state = PlayerState.Finish;
                 return;
             }
@@ -53,7 +39,7 @@ namespace testUnity.ctrl {
             }
             StaticVar.currentSelectedPlayer = player;
 
-            if (player.state == PlayerState.Playing) {
+            if (player.state == PlayerState.Idle) {
                 player.showMoveable ();
                 player.showAttackable ();
             } else if (player.state == PlayerState.AfterMove) {

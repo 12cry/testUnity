@@ -7,44 +7,34 @@ using UnityEngine;
 namespace testUnity.ctrl {
     public class AICtrl : MonoBehaviour {
         Queue<Player> queue = new Queue<Player> ();
-        AIState state = AIState.Finish;
+        AIState state = AIState.Idel;
         Player currentPlayer;
         bool strong = true;
 
         void Start () { }
         void Update () {
 
-            if (state == AIState.Finish) {
+            if (state == AIState.Idel) {
                 return;
             }
 
-            if (state == AIState.Ready) {
+            if (state == AIState.Building) {
                 build ();
-                state = AIState.Builded;
-            }
-
-            if (state == AIState.Builded) {
                 state = AIState.Playing;
             }
 
             if (state == AIState.Playing) {
-                if (currentPlayer == null || currentPlayer.state == PlayerState.Finish) {
+                if (currentPlayer == null || (currentPlayer != null && currentPlayer.state == PlayerState.Finish)) {
                     if (queue.Count > 0) {
                         currentPlayer = queue.Dequeue ();
-                        currentPlayer.state = PlayerState.Ready;
-                    } else if (!strong && enoughMoneyToBuild ()) {
-                        state = AIState.Ready;
+                        currentPlayer.state = PlayerState.Running;
                     } else {
-                        state = AIState.Played;
+                        StaticVar.currentGameState = GameState.HumanRuning;
+                        StaticVar.currentTeam = Game.instance.teamDic[0];
+                        reward ();
+                        state = AIState.Idel;
                     }
                 }
-            }
-
-            if (state == AIState.Played) {
-                StaticVar.currentGameState = GameState.HumanRuning;
-                StaticVar.currentTeam = Game.instance.teamDic[0];
-                reward ();
-                state = AIState.Finish;
             }
 
         }
@@ -108,8 +98,8 @@ namespace testUnity.ctrl {
                 }
             }
 
-            if (!strong) {
-                return;
+            if (!strong && enoughMoneyToBuild ()) {
+                build ();
             }
 
             foreach (City city in team.cityList) {
@@ -144,7 +134,7 @@ namespace testUnity.ctrl {
 
             return null;
         }
-        public void run () {
+        public void pass () {
             StaticVar.currentGameState = GameState.AIRuning;
             StaticVar.currentTeam = Game.instance.teamDic[1];
             reward ();
@@ -152,7 +142,7 @@ namespace testUnity.ctrl {
             foreach (Player player in playerList) {
                 queue.Enqueue (player);
             }
-            state = AIState.Ready;
+            state = AIState.Building;
         }
     }
 }

@@ -23,8 +23,7 @@ namespace testUnity.ctrl {
         public void init () {
             Land land = Game.instance.land;
             Debug.Log(land.column);
-            // cacheCamera.transform.position = new Vector3 (land.column / 2, cacheCamera.transform.position.y, land.row / 2);
-            cacheCamera.transform.position = new Vector3 (land.column / 2, 111, land.row / 2);
+            cacheCamera.transform.position = new Vector3 (land.column / 2, cacheCamera.transform.position.y, land.row / 2);
         }
 
         void Update () {

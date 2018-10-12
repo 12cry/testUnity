@@ -4,29 +4,46 @@ namespace testUnity.constant
     public enum GameState
     {
         HumanRuning,
-        Paused,
         AIRuning,
+        Paused,
         GameOver,
     }
 
     public enum AIState
     {
-        Ready,
-        Builded,
+        Idel,
+        Building,
         Playing,
-        Played,
-        Finish,
+        // PlayerRunning,
     }
+    // public enum AIState
+    // {
+    //     Ready,
+    //     Builded,
+    //     Playing,
+    //     Played,
+    //     Finish,
+    // }
 
     public enum PlayerState
     {
-        Ready,
-        Playing,
+        Idle,
+        Running,
         Moving,
         AfterMove,
         Attacking,
         Finish,
     }
+
+    // public enum PlayerState
+    // {
+    //     Ready,
+    //     Playing,
+    //     Moving,
+    //     AfterMove,
+    //     Attacking,
+    //     Finish,
+    // }
 
 
 }
